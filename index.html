@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>일본어 문장</title>
+<style>
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #121212;
+    color: #f5f5f5;
+}
+.screen {
+    min-height: 100vh;
+    text-align: center;
+}
+.hidden { display: none !important; }
+
+#mainScreen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#mainScreen h1 {
+    font-size: 36px;
+    margin-bottom: 35px;
+}
+
+#selectScreen {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#sentenceArea {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+#sentenceTextArea {
+width: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+}
+
+#sentence {
+width: 90%;
+min-height: 50px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-size: 40px;
+line-height: 1.4;
+word-break: keep-all;
+}
+
+.buttons {
+    margin-top: 80px;
+}
+button {
+    min-width: 80px;
+    padding: 10px 18px;
+    margin: 5px;
+    font-size: 16px;
+    background: #000000;
+    color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #f5f5f5;
+}
+.bottom-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
+}
+
+#reading {
+    min-height: 30px;
+    margin-bottom:0px;
+    font-size: 20px;
+    color: #f5f5f5;
+}
+
+#originalScreen {
+    min-height: 100vh;
+    padding: 40px 20px;
+    overflow-y: auto;
+}
+
+#originalText {
+    width: 90%;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: left;
+    white-space: pre-wrap;
+    font-size: 24px;
+    line-height: 1.8;
+}
+
+#sentenceGroupScreen,
+#originalGroupScreen {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+}
+
+#sentenceGroupScreen .bottom-buttons,
+#originalGroupScreen .bottom-buttons {
+    position: absolute;
+
+    bottom: 20px;
+    left: 50%;
+
+    transform: translateX(-50%);
+}
+
+.group-buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+#sentenceScreen {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="mainScreen" class="screen">
+    <h1>일본어 문장</h1>
+    <button onclick="openSelectScreen()">
+        학습
+    </button>
+
+</div>
+
+<div id="selectScreen" class="screen hidden">
+
+    <h1>선택</h1>
+    <div class="select-buttons">
+        <button onclick="openSentenceGroups()">
+            문장
+        </button>
+        <button onclick="openOriginalGroups()">
+            원문
+        </button>
+    </div>
+
+    <div class="bottom-buttons">
+        <button onclick="goHome()"></button>
+        <button onclick="goBack()">←</button>
+    </div>
+
+</div>
+
+<div id="sentenceGroupScreen" class="screen hidden">
+
+    <div class="group-content">
+
+        <h1>문장</h1>
+
+        <div class="group-buttons">
+            <button onclick="openSentence(1)">小一</button>
+            <button onclick="openSentence(2)">小二</button>
+            <button onclick="openSentence(3)">小三</button>
+            <button onclick="openSentence(4)">小四</button>
+            <button onclick="openSentence(5)">小五</button>
+            <button onclick="openSentence(6)">中一</button>
+            <button onclick="openSentence(7)">中二</button>
+            <button onclick="openSentence(8)">中三</button>
+            <button onclick="openSentence(9)">中四</button>
+            <button onclick="openSentence(10)">中五</button>
+        </div>
+
+    </div>
+
+    <div class="bottom-buttons">
+        <button onclick="goHome()"></button>
+        <button onclick="goBack()">←</button>
+    </div>
+
+</div>
+
+<div id="originalGroupScreen" class="screen hidden">
+
+    <div class="group-content">
+
+        <h1>원문</h1>
+
+        <div class="group-buttons">
+            <button onclick="openOriginal(1)">小1</button>
+            <button onclick="openOriginal(2)">小2</button>
+            <button onclick="openOriginal(3)">小3</button>
+            <button onclick="openOriginal(4)">小4</button>
+            <button onclick="openOriginal(5)">小5</button>
+            <button onclick="openOriginal(6)">中1</button>
+            <button onclick="openOriginal(7)">中2</button>
+            <button onclick="openOriginal(8)">中3</button>
+            <button onclick="openOriginal(9)">中4</button>
+            <button onclick="openOriginal(10)">中5</button>
+        </div>
+
+    </div>
+
+    <div class="bottom-buttons">
+        <button onclick="goHome()"></button>
+        <button onclick="goBack()">←</button>
+    </div>
+
+    </div>
+</div>
+
+
+<div id="originalScreen" class="screen hidden">
+    <div id="originalText">
+    </div>
+
+    <div class="bottom-buttons">
+        <button onclick="goHome()"></button>
+        <button onclick="goBack()">←</button>
+    </div>
+
+</div>
+
+<div id="sentenceScreen" class="screen hidden">
+    <div id="sentenceArea">
+        <div id="sentenceTextArea">
+            <div id="reading"></div>
+            <div id="sentence">
+                -
+            </div>
+
+        </div>
+
+        <div class="buttons">
+            <button onclick="prevSentence()">
+                ≪
+            </button>
+            <button id="startButton" onclick="toggleAutoPlay()">
+                ▶︎
+            </button>
+            <button onclick="nextSentence()">
+                ≫
+            </button>
+        </div>
+
+
+        <div class="bottom-buttons">
+            <button id="readingButton" onclick="toggleReading()">
+                ★
+            </button>
+            <button onclick="goHome()">
+                
+            </button>
+            <button onclick="goBack()">
+                ←
+            </button>
+            <button onclick="resetSentence()">
+                ⟲
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+const originals小一 = [
+    {
+        text: "料理は見た目も大切です。料理をお皿などに入れるときに気をつけたいことは、料理を盛る高さと余白と料理の色の3つです。高さがあるように盛るとおいしそうに見えますし、そこにいろいろな色があれば脳がよく働くことも知られています。また、広い余白は高級なイメージ、狭い余白は親しみを感じさせます。料理を上品に見せたいときは30%以上の余白を残したほうがいいです。ですから大きな入れ物を使ったほうが簡単に上手に盛りつけられる可能性が高いと思います。",
+    },
+];
+
+const originals小二 = [
+    {
+        text: "14階のビルが予想通り森のようになった。1995年に建てた時に南側面の緑化を、多くのビルとは違い草花の代わり76種類の木に決めた。その木が成長しただけでなく長年の間に鳥や風が運んだ種により200種類にも増え、その木から落ちた葉が腐葉土となり、木を育て、雨だけで木々が育つほどになったそうだ。確かに南から見るとビルは森に囲まれている。ビルの外側に造られた階段を上がれは屋上まで15分ほどの登山気分も楽しめるとか。",
+    },
+];
+
+const originals小三 = [
+    {
+        text: "大川さんは毎月月末に10万円ずつ、7月と12月にはボーナスからも30万円ずつ貯金してきた。12月31日に貯金が総額1,000万円になった。貯金は家の購入時の頭金にするつもりだ。子供の教育費の100円を除いた全額が頭金にできる。頭金は普通20%必要だ。来月4ヶ月に子供が小学校に入学するので家を探している。",
+    },
+];
+
+const originals小四 = [
+    {
+        text: "アルコール成分が入っていないノンアルコールビールはビールに似ている味でおいしい。それに酒税もかからないからジュースと同じく安く買える。だから宗教上の理由などでお酒が飲めない人や、車を運転する人、妊娠中の女性の人などお酒を飲んではいけない人に飲まれている。また酒が飲みたくない若い人たちにも人気があって、ビールの売り上げが減少しているのにこちらは売り上げが急増している",
+    },
+];
+
+const originals小五 = [
+    {
+        text: "北病院の面会時間は午後1時から8時までです。小学生以下の方の面会はできません。面会する場合は総合案内所でお名前を記入の上、番号札をもらってよく見えるところにつけてください。病室では地の入院されている方の迷惑にならないように話し声に気をつけてください。病室では面会の方は飲んだり食べたりできません。お酒とたばこは病院内はすべて禁止です。携帯電話は医療機器に悪い影響与える恐れがありますので、病室では電源を切ってください。休憩室でのみご使用できます。休憩室はすべての階にございます。",
+    },
+
+];
+
+const originals中一 = [
+    {
+        text: "自分が何かしてもらったとき「〇〇さんに〜していただく」という敬語を使う。しかしこれを「〇〇さんが〜していただく」と間違えて使う人が多い。「が」を使うなら「〇〇さんが〜してくださる」と動詞を変えなければならない。外国人は授業で習うし日本語能力試験にも必ず出題される。外国人の方が正しく使っているようだ。敬語は学校でも習っているが、全然身に付いていな。有名な司会者を始め、政治や経済の重要な位にいる人までが間違える。だから毎日のようにこの間違った敬語をテレビで耳にする一般の人々はこれが正しいと思うようになってしまう。先日ある人が友だちにセーターを作ってもらったことを説明する際に、「友だちが作ってもらった」と言っているのを聞いた。もうここまで来ているのかと驚いた。\n言葉は変化するものだ。「全然」が否定形と一緒に使われなくなって久しい。「ら抜き言葉」も「さ入れ言葉」も仕方がない部分もある。しかし日本語で助詞は一番重要だ。日本語が主語や言わなくても分かる言葉を省略して使うことができるのは助詞があるからだ。もう助詞が正しく使えないなら、もう省略した言い方はできなくなる。何とかしなければならない時期に来ているのではないだろうか。",
+    },
+
+];
+
+const originals中二 = [
+    {
+        text: "誰もが若々しく美しくありたいと願うから薬局の棚は様々な化粧品で溢れている。特に基礎化粧品は、肌の美しさを保つための物なので、最も重要視されている。化粧品会社は美白用、しわ防止用として様々な成分を入れて各社近いを前面に出し競い合っているか、画期的と言えるほど効果がある物はまだない。\nしかし若々しい肌を簡単に手に入れられる可能性が出てきた。しわやしみで悩んでいる人には嬉しい情報である。携帯型3Dスキンプリンターが生体材料を使って皮膚の上に一枚皮膚を重ねることで手に入れられるのである。まずその人の肌を撮影してしわやしみがどこにあるかを探す。そしてその人の肌に合わせて作った色の生体材料のファンデーションを肌全体に塗っていく。全てが自動化されていて、ただプリンターを肌の上で滑らすだけである。しわやしみが多い人ほど仕上がりの違いが実感できるので大喜びする。もうメキャプアーティストのテクニックは必要ない。\nこの発明は化粧品会社には手ごわい競争相手になるだろう。しかし装置で肌そのものがきれいになるわけではなく、化粧するのと同じである。また価格によっては普通の人には手が届かないだろう。だから今ある化粧品は消えることはない。今後もそれぞれ得意な分野での活況が続くことだろう。",
+    },
+
+];
+
+const originals中三 = [
+    {
+        text: "調理ロボットは人手不足や人件費の節約のために開発された。だから人手不足の日本のレストランで使われるのは自然なことだ。しかし、十分な人手があるにもかかわらず、取り入れている国も多い。前述の理由だけでなく調理ロボットに高度の技術を取り入れたことでそのような国にも受け入れられたようだ。例えば誰もが簡単に巻き寿司を作ることはできない。海外では巻き寿司が人気だが寿司職人を雇うのは難しい。しかし巻き寿司が作れるロボットなら材料を入れさえすればあっという間にきれいな寿司ができる。ロボットの値段は性能によっていろいろあるから、自分たちに合わせて手に入れることができる。\nまた物珍しさで人目を引くために調理ロボットを使う店もある。ロボットがたこ焼きを作っているのを見たりするのはお客にとって楽しいことだからだ。店でなく食品工場で活躍する調理機械は主に大量生産するためにお菓子を始め多くの加工食品を作るのに使われている。様々な機械があるが、今一番注目を集めているのは串刺しができる調理機械かもしれない。焼き鳥を始め様々な食品を串刺しにできる。簡単なようでも形が様々な材料を串で刺すのには高度な技術が必要だが、この機械はとうもろこしの粒さえ刺すことができるそうだ。これからも様々な調理ロボットが生まれてますます進化していくことだろう。",
+    },
+
+];
+
+const originals中四 = [
+    {
+        text: "広く海外では日本茶は「グリーンティー」つまり緑のお茶と呼ばれている。「茶色」はお茶の色という意味だが、実際は土のような色である。なぜ茶色が現在のお茶の色と違ってしまったのか。お茶は中国から伝わって来たもので、当時のお茶は釜で炒って揉んで日に干して作ったので色は茶色だった。今の緑色のお茶は煎茶といって江戸時代に製法が完成した。紅茶は発酵させたお茶で、ウーロン茶は半分発酵させる、煎茶は全く発酵させないで作る。同じお茶の葉を使っても全く違う味や色のお茶ができる。\nお茶は昔は貴重だったので、薬として使われていた。お茶の木がたくさん植えられるようになると一般の人もお茶を飲むようになった。多くの人は煎茶を飲んでいる。お茶を「茶道」という芸術に完成させたのは「千利体」である。なぜ本場の中国で芸術とならなかったのか不思議に思ったが、中国人はおいしく飲むことを第一に考えていたからだという話を聞いてそれはそうだと思った。これに対して日本の茶道は花や書を飾った静かで落ち着いた雰囲気がある茶室で、お茶を飲んだり道具や入れ方を見て楽しむ。茶道で使われるお茶は煎茶ではなく、葉を全部後にした抹茶だからかなり苦い。私は初めて抹茶を飲んでおいしいと言う人にめったに会ったことがない。\nお茶は体に良いから健康のために飲むことも多い。海外の人にも砂糖やミルクなど入れないで飲むお茶の人気が出てきたそうだ。また抹茶味は日本の味として多くの外国人に人気だそうだ。抹茶が入れているチョコレートを箱買いしている外国人が大勢いるのである。",
+    },
+
+];
+
+const originals中五 = [
+    {
+        text: "2009年から日本で一般の市民が裁判に参加するようになった。しかし呼び出されても約3人に1人が辞退しているそうだ。辞退できるのは本人や家族の病気やケガ、葬式や出産、重要な仕事などの事情がある場合だ。また呼び出された人のうちの6人しか裁判員になれないので呼び出す人数が多すぎるという不満の声が挙がっている。\n日当は裁判員を選ぶ日は8千円以内、裁判員を務めた日は1万円以内だそうだ。額が多いとか少ないとか言われているが、いくら高額でも嫌だと言う人もいる。裁判員が参加する裁判は泥棒などという軽い刑ではなく殺人など重大な事件だから、死刑を言い渡さなければならないこともあって、裁判員になりたくないと言い人もいる。裁判官と裁判員で話し合って多数決で判決を出すから、裁判員も責任が大きい。多数決では必ず裁判官1人以上が賛成する必要がある。\n一般人の参加によって家族間の事件は同情して刑が軽くなり、一方性犯罪は重くなる傾向になった。よくも悪くも普通の人の考え方に近づいているようである。また市民の裁判に対する関心が高まっている。これが今回一番よかったことなのではないだろうか。",
+    },
+
+];
+
+const sentences小一 = [
+    {
+        sentence: "",
+        reading: "",
+    },
+];
+
+const sentences小二 = [
+    {
+        sentence: "",
+        reading: "",
+    },
+];
+
+const sentences小三 = [
+    {
+        sentence: "",
+        reading: "",
+    },
+];
+
+const sentences小四 = [
+    {
+        sentence: "",
+        reading: "",
+    },
+];
+
+const sentences小五 = [
+    {
+        sentence: "",
+        reading: "",
+    },
+];
+
+const sentences中一 = [
+
+    {
+        sentence: "自分が何かしてもらったとき",
+        reading: "じぶんがなにかしてもらったとき",
+    },
+    {
+        sentence: "「〇〇さんに〜していただく」という敬語を使う。",
+        reading: "「〇〇さんに〜していただく」というけいごをつかう。",
+    },
+    {
+        sentence: "しかしこれを「〇〇さんが〜していただく」と",
+        reading: "",
+    },
+    {
+        sentence: "間違えて使う人が多い。",
+        reading: "まちがえてつかうひとがおおい。",
+    },
+    {
+        sentence: "「が」を使うなら「〇〇さんが〜してくださる」と",
+        reading: "「が」をつかうなら「〇〇さんが〜してくださる」と",
+    },
+    {
+        sentence: "動詞を変えなければならない。",
+        reading: "どうしをかえなければならない",
+    },
+    {
+        sentence: "外国人は授業で習うし",
+        reading: "がいこくじんはじゅぎょうでならうし",
+    },
+    {   sentence: "日本語能力試験にも必ず出題される。",
+        reading: "にほんごのうりょくしけんにもかならずしゅつだいされる",
+    },
+    {
+        sentence: "外国人の方が正しく使っているようだ。",
+        reading: "がいこくじんのかたがただしくつかっているようだ。",
+    },
+    {
+        sentence: "敬語は学校でも習っているが、",
+        reading: "けいごはがっこでもならっているが",
+    },
+    {
+        sentence: "全然身に付いていない。",
+        reading: "ぜんぜんみについていない",
+    },
+    {
+        sentence: "有名な司会者を始め、",
+        reading: "ゆうめいなしかいしゃをはじめ、",
+    },
+    {
+        sentence: "政治や経済の重要な地位にいる人までが間違える。",
+        reading: "せいじやけいざいのじゅうようなちいにいるひとまでがまちがえる。",
+    },
+    {
+        sentence: "だから毎日のようにこの間違った敬語をテレビで耳にする",
+        reading: "だからまいにちのようにこのまちがったけいごをテレビでみみにする",
+    },
+    {
+        sentence: "一般の人々はこれが正しいと思うようになってしまう。",
+        reading: "いっぱんのひとびとはこれがただしいとおもうようになってしまう。",
+    },
+    {
+        sentence: "先日ある人が友だちにセーターを作ってもらったことを",
+        reading: "せんじつあるひとがともだちにセーターをつくってもらったことを",
+    },
+    {
+        sentence: "説明する際に、「友だちが作ってもらった」と言っているのを聞いた。",
+        reading: "せつめいするさいに、「ともだちがつくってもらった」といっているのをきいた。",
+    },
+    {
+        sentence: "もうここまで来ているのかと驚いた。",
+        reading: "もうここまできているのかとおどろいた。",
+    },
+    {
+        sentence: "言葉は変化するものだ。",
+        reading: "ことばはへんかするものだ",
+    },
+    {
+        sentence: "「全然」が否定形と一緒に使われなくなって久しい。",
+        reading: "「ぜんぜん」がひていけいといっしょにつかわれなくなってひさしい。",
+    },
+    {
+        sentence: "「ら抜き言葉」も「さ入れ言葉」も仕方がない部分もある。",
+        reading: "「らぬきことば」も「さいれことば」もしかたがないぶぶんもある。",
+    },
+    {
+        sentence: "しかし日本語で助詞は一番重要だ。",
+        reading: "しかしにほんごでじょしはいちばんじゅようだ",
+    },
+    {
+        sentence: "日本語が主語や言わなくても分かる言葉を",
+        reading: "にほんごがしゅごやいわなくてもわかることばを",
+    },
+    {
+        sentence: "省略して使うことができるのは助詞があるからだ。",
+        reading: "しょうりゃくしてつかうことができるのはじょしがあるからだ。",
+    },
+    {
+        sentence: "もう助詞が正しく使えないなら、",
+        reading: "もうじょしがただしくつかえないなら、",
+    },
+    {
+        sentence: "もう省略した言い方はできなくなる。",
+        reading: "もうしょうりゃくしていいかたはできなくなる。",
+    },
+    {
+        sentence: "何とかしなければならない時期に来ているのではないだろうか。",
+        reading: "なんとかしなければならないじょしにきているのではないだろうか。",
+    },
+
+];
+
+const sentences中二 = [
+
+    {
+        sentence: "誰もが若々しく美しくありたいと願うから",
+        reading: "だれもがわかわかしくうつくしくありたいとねがうから",
+    },
+    {
+        sentence: "薬局の棚は様々な化粧品で溢れている",
+        reading: "やっきょくのたなはさまざまなけしょうひんであふれている。",
+    },
+    {
+        sentence: "特に基礎化粧品は、肌の美しさを保つための物なので、",
+        reading: "とくにきそけしょうひんは、はだのうつくしさをたもつためのものなので、",
+    },
+    {
+        sentence: "最も重要視されている。",
+        reading: "もっともじゅうようしされている。",
+    },
+    {
+        sentence: "化粧品会社は美白用、しわ防止用として",
+        reading: "けしょうひんがいしゃはびはくよう、しわぼうしようとして",
+    },
+    {
+        sentence: "様々な成分を入れて各社近いを前面に出し競い合っているか、",
+        reading: "さまざまなせいぶんをいれてかくしゃちかいをぜんめんにだしきそいあっているか、",
+    },
+    {
+        sentence: "画期的と言えるほど効果がある物はまだない",
+        reading: "かっきてきといえるほどこうかがあるものはまだない。",
+    },
+    {
+        sentence: "しかし若々しい肌を簡単に手に入れられる可能性が出てきた",
+        reading: "しかしわかわかしいはだをかんたんにてにいれられるかのうせいがでてきた。",
+    },
+    {
+        sentence: "しわやしみで悩んでいる人には嬉しい情報である。",
+        reading: "しわやしみでなやんでいるひとにはうれしいじょうほうである。",
+    },
+    {
+        sentence: "携帯型3Dスキンプリンターが生体材料を使って",
+        reading: "けいたいがた3Dスキンプリンターがせいたいざいりょうをつかって",
+    },
+    {
+        sentence: "皮膚の上に一枚皮膚を重ねることで手に入れられるのである。",
+        reading: "ひふのうえにいちまいひふをかさねることでてにいれられるのである。",
+    },
+    {
+        sentence: "まずその人の肌を撮影してしわやしみがどこにあるかを探す。",
+        reading: "まずそのひとのはだをさつえいしてしわやしみがどこにあるかをさがす。",
+    },
+    {
+        sentence: "そしてその人の肌に合わせて作った色の生体材料の",
+        reading: "そしてそのひとのはだにあわせてつくったいろのせいたいざいりょうの",
+    },
+    {
+        sentence: "ファンデーションを肌全体に塗っていく。",
+        reading: "ファンデーションをはだぜんたいにぬっていく。",
+    },
+    {
+        sentence: "全てが自動化されていて、",
+        reading: "すべてがじどうかされていて、",
+    },
+    {
+        sentence: "ただプリンターを肌の上で滑らすだけである。",
+        reading: "ただプリンターをはだのうえですべらすだけである。",
+    },
+    {
+        sentence: "しわやしみが多い人ほど仕上がりの違いが実感できるので大喜びする。",
+        reading: "しわやしみがおおいひとほどしあがりのちがいがじっかんできるのでおおよろこびする。",
+    },
+    {
+        sentence: "もうメキャプアーティストのテクニックは必要ない。",
+        reading: "もうメキャプアーティストのテクニックはひつようない。",
+    },
+    {
+        sentence: "この発明は化粧品会社には手ごわい競争相手になるだろう。",
+        reading: "このはつめいはけしょうひんがいしゃにはてごわいきょうそうあいてになるだろう。",
+    },
+    {
+        sentence: "しかし装置で肌そのものがきれいになるわけではなく、",
+        reading: "しかしそうちではだそのものがきれいになるわけではなく、",
+    },
+    {
+        sentence: "化粧するのと同じである。",
+        reading: "けしょうするのとおなじである。",
+    },
+    {
+        sentence: "また価格によっては普通の人には手が届かないだろう。",
+        reading: "またかかくによってはふつうのひとにはてがとどかないだろう。",
+    },
+    {
+        sentence: "だから今ある化粧品は消えることはない。",
+        reading: "だからいまあるけしょうひんはきえることはない。",
+    },
+    {
+        sentence: "今後もそれぞれ得意な分野での活況が続くことだろう。",
+        reading: "こんごもそれぞれとくいなぶんやでのかっきょうがつづくことだろう。",
+    },
+
+];
+
+const sentences中三 = [
+
+    {
+        sentence: "調理ロボットは人手不足や人件費の節約のために開発された。",
+        reading: "ちょうりロボットはひとでぶそくやじんけんひのせつやくのためにかいはつされた。",
+    },
+    {
+        sentence: "だから人手不足の日本のレストランで使われるのは自然なことだ。",
+        reading: "だからひとでぶそくのにほんのレストランでつかわれるのはしぜんなことだ。",
+    },
+    {
+        sentence: "しかし、十分な人手があるにもかかわらず、取り入れている国も多い。",
+        reading: "しかし、じゅうぶんなひとでがあるにもかかわらず、とりいれているくにもおおい。",
+    },
+    {
+        sentence: "前述の理由だけでなく調理ロボットに高度の技術を取り入れたことで",
+        reading: "ぜんじゅつのりゆうだけでなくちょうりロボットにこうどのぎじゅつをとりいれたことで",
+    },
+    {
+        sentence: "そのような国にも受け入れられたようだ。",
+        reading: "そのようなくににも受けいれられたようだ。",
+    },
+    {
+        sentence: "例えば誰もが簡単に巻き寿司を作ることはできない。",
+        reading: "たとえばだれもがかんたんにまきずしをつくることはできない。",
+    },
+    {
+        sentence: "海外では巻き寿司が人気だが寿司職人を雇うのは難しい。",
+        reading: "かいがいではまきずしがにんきだがすししょくにんをやとうのはむずかしい。",
+    },
+    {
+        sentence: "しかし巻き寿司が作れるロボットなら",
+        reading: "しかしまきずしがつくれるロボットなら",
+    },
+    {
+        sentence: "材料を入れさえすればあっという間にきれいな寿司ができる。",
+        reading: "ざいりょうをいれさえすればあっというまにきれいなすしができる。",
+    },
+    {
+        sentence: "ロボットの値段は性能によっていろいろあるから、",
+        reading: "ロボットのねだんはせいのうによっていろいろあるから、",
+    },
+    {
+        sentence: "自分たちに合わせて手に入れることができる。",
+        reading: "じぶんたちにあわせててにいれることができる。",
+    },
+    {
+        sentence: "また物珍しさで人目を引くために調理ロボットを使う店もある。",
+        reading: "またものめずらしさでひとめをひくためにちょうりロボットをつかうみせもある。",
+    },
+    {
+        sentence: "ロボットがたこ焼きを作っているのを見たりするのは",
+        reading: "ロボットがたこやきをつくっているのをみたりするのは",
+    },
+    {
+        sentence: "お客にとって楽しいことだからだ。",
+        reading: "おきゃくにとってたのしいことだからだ。",
+    },
+    {
+        sentence: "店でなく食品工場で活躍する調理機械は",
+        reading: "みせでなくしょくひんこうじょうでかつやくするちょうりきかいは",
+    },
+    {
+        sentence: "主に大量生産するためにお菓子を始め",
+        reading: "おもにたいりょうせいさんするためにおかしをはじめ",
+    },
+    {
+        sentence: "多くの加工食品を作るのに使われている。",
+        reading: "おおくのかこうしょくひんをつくるのにつかわれている。",
+    },
+    {
+        sentence: "様々な機械があるが、今一番注目を集めているのは",
+        reading: "さまざまなきかいがあるが、いまいちばんちゅうもくをあつめているのは",
+    },
+    {
+        sentence: "串刺しができる調理機械かもしれない。",
+        reading: "くしざしができるちょうりきかいかもしれない。",
+    },
+    {
+        sentence: "焼き鳥を始め様々な食品を串刺しにできる。",
+        reading: "やきとりをはじめさまざまなしょくひんをくしざしにできる。",
+    },
+    {
+        sentence: "簡単なようでも形が様々な材料を",
+        reading: "かんたんなようでもかたちがさまざまなざいりょうを",
+    },
+    {
+        sentence: "串で刺すのには高度な技術が必要だが、",
+        reading: "くしでさすのにはこうどなぎじゅつがひつようだが、",
+    },
+    {
+        sentence: "この機械はとうもろこしの粒さえ刺すことができるそうだ。",
+        reading: "このきかいはとうもろこしのつぶさえさすことができるそうだ。",
+    },
+    {
+        sentence: "これからも様々な調理ロボットが生まれて",
+        reading: "これからもさまざまなちょうりロボットがうまれて",
+    },
+    {
+        sentence: "ますます進化していくことだろう。",
+        reading: "ますますしんかしていくことだろう。",
+    },
+
+];
+
+const sentences中四 = [
+
+    {
+        sentence: "調理ロボットは人手不足や人件費の節約のために開発された。",
+        reading: "ちょうりロボットはひとでふそくやじんけんひのせつやくのためにかいはつされた。",
+    },
+    {
+        sentence: "だから人手不足の日本のレストランで使われるのは自然なことだ。",
+        reading: "だからひとでふそくのにほんのレストランでつかわれるのはしぜんなことだ。",
+    },
+    {
+        sentence: "しかし、十分な人手があるにもかかわらず、取り入れている国も多い",
+        reading: "しかし、じゅっぶんなひとでがあるにもかかわらず、とりいれているくにもおおい。",
+    },
+    {
+        sentence: "前述の理由だけでなく調理ロボットに高度の技術を取り入れたことで",
+        reading: "ぜんじゅつのりゆうだけでなくちょうりロビッとにこうどのぎじゅつをとりいれたことで",
+    },
+    {
+        sentence: "そのような国にも受け入れられたようだ。",
+        reading: "そのようなくににもうけいれられたようだ。",
+    },
+    {
+        sentence: "例えば誰もが簡単に巻き寿司を作ることはできない",
+        reading: "たとえばだれもがかんたんにまきすしをつくることはできない",
+    },
+    {
+        sentence: "海外では巻き寿司が人気だが寿司職人を雇うのは難しい",
+        reading: "かいがいではまきずしがにんきだがすししょくにんをやとうのはむずかしい",
+    },
+    {
+        sentence: "しかし巻き寿司が作れるロボットなら",
+        reading: "しかしまきずしがつくれるロボットなら",
+    },
+    {
+        sentence: "材料を入れさえすればあっという間にきれいな寿司ができる。",
+        reading: "ざいりょうをいれさえすればあっというあいだにきれいなすしができる。",
+    },
+    {
+        sentence: "ロボットの値段は性能によっていろいろあるから、",
+        reading: "ロボットのねだんはせいのうによっていろいろあるから、",
+    },
+    {
+        sentence: "自分たちに合わせて手に入れることができる。",
+        reading: "じぶんたちにあわせててにいれることができる。",
+    },
+    {
+        sentence: "また物珍しさで人目を引くために調理ロボットを使う店もある。",
+        reading: "またものめずらしさでひとめをひくためにちょうりロボットをつかうみせもある。",
+    },
+    {
+        sentence: "ロボットがたこ焼きを作っているのを見たりするのは",
+        reading: "ロボットだたこやきをつくっているのをみたちするのは",
+    },
+    {
+        sentence: "お客にとって楽しいことだからだ。",
+        reading: "おきゃくにとってたのしいことだからだ。",
+    },
+    {
+        sentence: "店でなく食品工場で活躍する調理機械は",
+        reading: "みせでなくしょくひんこうじでかつやくするちょうりきかいは",
+    },
+    {
+        sentence: "主に大量生産するためにお菓子を始め",
+        reading: "おもにたいりょうせいさんするためにおかしをはじめ",
+    },
+    {
+        sentence: "多くの加工食品を作るのに使われている。",
+        reading: "おおくのかこうしょくひんをつくるのにつかわれてうる。",
+    },
+    {
+        sentence: "様々な機械があるが、今一番注目を集めているのは",
+        reading: "さまざまなきかいがあるが、いまいっばんちゅうもくをあつめているのは",
+    },
+    {
+        sentence: "串刺しができる調理機械かもしれない。",
+        reading: "くしざしができるちょうりきかいかもしれない。",
+    },
+    {
+        sentence: "焼き鳥を始め様々な食品を串刺しにできる。",
+        reading: "やきとりをはじめさまざまなしょくひんをくしざしにできる。",
+    },
+    {
+        sentence: "簡単なようでも形が様々な材料を",
+        reading: "かんたんなようもかたちがさまざまなざいりょうを",
+    },
+    {
+        sentence: "串で刺すのには高度な技術が必要だが、",
+        reading: "くしでさすのにはこうどなぎじゅつがひつようだが",
+    },
+    {
+        sentence: "この機械はとうもろこしの粒さえ刺すことができるそうだ。",
+        reading: "このきかいはとうもろうこしのつぶだえさすことができるそう",
+    },
+    {
+        sentence: "これからも様々な調理ロボットが生まれて",
+        reading: "これからもさまざまなちょうりロボットがうまれて",
+    },
+    {
+        sentence: "ますます進化していくことだろう。",
+        reading: "ますますしんかしていくことだろう。",
+    },
+
+];
+
+const sentences中五 = [
+
+    {
+        sentence: "2009年から日本で一般の市民が裁判に参加するようになった。",
+        reading: "2009ねんからにほんでいっぱんのしみんがさいばんにさんかするようになった。",
+    },
+    {
+        sentence: "しかし呼び出されても約3人に1人が辞退しているそうだ。",
+        reading: "しかしよびだされてもやく3にんに1じんがじたいじているそうだ。",
+    },
+    {
+        sentence: "辞退できるのは本人や家族の病気やケガ、",
+        reading: "じたいできるのはほんにんやかぞくのびょうきやけが、",
+    },
+    {
+        sentence: "葬式や出産、重要な仕事などの事情がある場合だ。",
+        reading: "そうしきやしゅっさん、じゅうようなしごとなどのじじょうがあるばあいだ。",
+    },
+    {
+        sentence: "また呼び出された人のうちの6人しか裁判員になれないので",
+        reading: "またよびだされたひとのうちの6じんがさいばんいんになれないので",
+    },
+    {
+        sentence: "呼び出す人数が多すぎるという不満の声が挙がっている。",
+        reading: "よびだすにんすうがおおすぎるというふまんのこえがあがっている",
+    },
+    {
+        sentence: "日当は裁判員を選ぶ日は8千円以内、",
+        reading: "にっとうはさいばんいんをえらぶひは８せんえんいない、",
+    },
+    {
+        sentence: "裁判員を務めた日は1万円以内だそうだ。",
+        reading: "さいばんいんをつとめたひは1まんえんいないだそうだ。",
+    },
+    {
+        sentence: "額が多いとか少ないとか言われているが、",
+        reading: "かくがおおいとすくないとかいわれているか、",
+    },
+    {
+        sentence: "いくら高額でも嫌だと言う人もいる。",
+        reading: "いくらこうがくでもきらいだというひともいる。",
+    },
+    {
+        sentence: "裁判員が参加する裁判は泥棒などという",
+        reading: "さいばんがさんかするさいばんはどろぼうなどという",
+    },
+    {
+        sentence: "軽い刑ではなく殺人など重大な事件だから、",
+        reading: "かるいけいではなくさつじんなどじゅうだいなじけんだから、",
+    },
+    {
+        sentence: "死刑を言い渡さなければならないこともあって、",
+        reading: "しけいをいいわたさなければならないこともあって、",
+    },
+    {
+        sentence: "裁判員になりたくないと言い人もいる。",
+        reading: "さいばんいんになりたくないというひともいる。",
+    },
+    {
+        sentence: "裁判官と裁判員で話し合って多数決で判決を出すから、",
+        reading: "さいばんかんとさいばんいんではなしあってたすうけつではんけつをだすから、",
+    },
+    {
+        sentence: "裁判員も責任が大きい。",
+        reading: "さいばんいんもせきにんがおおきい。",
+    },
+    {
+        sentence: "多数決では必ず裁判官1人以上が賛成する必要がある。",
+        reading: "たすうけつではかならずさいばんかんひとりいじょうさんせいするひつようがある。",
+    },
+    {
+        sentence: "一般人の参加によって家族間の事件は同情して刑が軽くなり、",
+        reading: "いっぱんじんのさんかによってかぞくあいだのじけんはどうじょうしてけいがかるくなり、",
+    },
+    {
+        sentence: "一方性犯罪は重くなる傾向になった。",
+        reading: "いっぽうせいはんざいはおもくなるけいこうになった。",
+    },
+    {
+        sentence: "よくも悪くも普通の人の考え方に近づいているようである。",
+        reading: "よくもわるくもふつうのひとのかんがえかたにちかづいているようである。",
+    },
+    {
+        sentence: "また市民の裁判に対する関心が高まっている。",
+        reading: "またしみんのさいばんにたいするかんしんがたかまっている。",
+    },
+    {
+        sentence: "これが今回一番よかったことなのではないだろうか。",
+        reading: "これがこんかいいちばんよかったことなのではないだろうか。",
+    },
+
+];
+
+
+let currentIndex = 0;
+let currentSentences = sentences小一;
+let autoTimer = null;
+let isPlaying = false;
+let showReading = false;
+
+const AUTO_INTERVAL = 3000;
+
+function openSentence(section) {
+
+    if (section === 1) {
+        currentSentences = sentences小一;
+    } else if (section === 2) {
+        currentSentences = sentences小二;
+    } else if (section === 3) {
+        currentSentences = sentences小三;
+    } else if (section === 4) {
+        currentSentences = sentences小四;
+    } else if (section === 5) {
+        currentSentences = sentences小五;
+    } else if (section === 6) {
+        currentSentences = sentences中一;
+    } else if (section === 7) {
+        currentSentences = sentences中二;
+    } else if (section === 8) {
+        currentSentences = sentences中三;
+    } else if (section === 9) {
+        currentSentences = sentences中四;
+    } else if (section === 10) {
+        currentSentences = sentences中五;
+    }
+
+    currentIndex = 0;
+
+    document.getElementById("sentenceGroupScreen").classList.add("hidden");
+    document.getElementById("sentenceScreen").classList.remove("hidden");
+
+    showSentence();
+}
+
+function goHome() {
+
+    clearInterval(autoTimer);
+    autoTimer = null;
+    isPlaying = false;
+
+    document.getElementById("startButton").textContent = "▶︎";
+
+    document.getElementById("selectScreen").classList.add("hidden");
+    document.getElementById("sentenceGroupScreen").classList.add("hidden");
+    document.getElementById("originalGroupScreen").classList.add("hidden");
+    document.getElementById("sentenceScreen").classList.add("hidden");
+    document.getElementById("originalScreen").classList.add("hidden");
+
+    document.getElementById("mainScreen").classList.remove("hidden");
+
+}
+
+function showSentence() {
+    const item = currentSentences[currentIndex];
+
+    document.getElementById("sentence").textContent = item.sentence;
+    document.getElementById("reading").textContent = showReading ? item.reading : "";
+
+}
+
+function prevSentence() {
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = currentSentences.length - 1;
+    }
+
+    showSentence();
+}
+
+function nextSentence() {
+    if (currentIndex < currentSentences.length - 1) {
+        currentIndex++;
+        showSentence();
+    } else {
+
+        clearInterval(autoTimer);
+        isPlaying = false;
+        document.getElementById("startButton").textContent = "▶︎";
+    }
+}
+
+function resetSentence() {
+    clearInterval(autoTimer);
+    isPlaying = false;
+    currentIndex = 0;
+    showSentence();
+    document.getElementById("startButton").textContent = "▶︎";
+}
+
+function toggleAutoPlay() {
+    if (isPlaying) {
+        clearInterval(autoTimer);
+        autoTimer = null;
+        isPlaying = false;
+        document.getElementById("startButton").textContent = "▶︎";
+    } else {
+        isPlaying = true;
+        document.getElementById("startButton").textContent = "❚❚";
+
+        autoTimer = setInterval(function() {
+            nextSentence();
+        }, AUTO_INTERVAL);
+    }
+}
+
+function toggleReading() {
+    showReading = !showReading;
+
+    const item = currentSentences[currentIndex];
+    document.getElementById("reading").textContent = showReading ? item.reading : "";
+    document.getElementById("readingButton").textContent = showReading ? "★" : "☆";
+}
+
+function openSelectScreen() {
+
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("selectScreen").classList.remove("hidden");
+
+}
+
+function openSentenceGroups() {
+
+    document
+        .getElementById("selectScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("sentenceGroupScreen")
+        .classList.remove("hidden");
+
+}
+
+
+function openOriginalGroups() {
+
+    document
+        .getElementById("selectScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("originalGroupScreen")
+        .classList.remove("hidden");
+
+}
+
+function goBack() {
+
+    if (!document.getElementById("sentenceScreen").classList.contains("hidden")) {
+
+        document.getElementById("sentenceScreen").classList.add("hidden");
+        document.getElementById("sentenceGroupScreen").classList.remove("hidden");
+
+        clearInterval(autoTimer);
+        autoTimer = null;
+        isPlaying = false;
+
+        document.getElementById("startButton").textContent = "▶︎";
+
+        return;
+    }
+
+
+    if (!document.getElementById("originalScreen").classList.contains("hidden")) {
+
+        document.getElementById("originalScreen").classList.add("hidden");
+        document.getElementById("originalGroupScreen").classList.remove("hidden");
+
+        return;
+    }
+
+
+    if (!document.getElementById("sentenceGroupScreen").classList.contains("hidden")) {
+
+        document.getElementById("sentenceGroupScreen").classList.add("hidden");
+        document.getElementById("selectScreen").classList.remove("hidden");
+
+        return;
+    }
+
+
+    if (!document.getElementById("originalGroupScreen").classList.contains("hidden")) {
+
+        document.getElementById("originalGroupScreen").classList.add("hidden");
+        document.getElementById("selectScreen").classList.remove("hidden");
+
+        return;
+    }
+
+
+    if (!document.getElementById("selectScreen").classList.contains("hidden")) {
+
+        document.getElementById("selectScreen").classList.add("hidden");
+        document.getElementById("mainScreen").classList.remove("hidden");
+
+        return;
+    }
+
+}
+
+
+function openOriginal(section) {
+
+    let currentOriginals;
+
+    if (section === 1) {
+        currentOriginals = originals小一;
+    } else if (section === 2) {
+        currentOriginals = originals小二;
+    } else if (section === 3) {
+        currentOriginals = originals小三;
+    } else if (section === 4) {
+        currentOriginals = originals小四;
+    } else if (section === 5) {
+        currentOriginals = originals小五;
+    } else if (section === 6) {
+        currentOriginals = originals中一;
+    } else if (section === 7) {
+        currentOriginals = originals中二;
+    } else if (section === 8) {
+        currentOriginals = originals中三;
+    } else if (section === 9) {
+        currentOriginals = originals中四;
+    } else if (section === 10) {
+        currentOriginals = originals中五;
+    }
+
+    document
+        .getElementById("originalGroupScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("originalScreen")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("originalText")
+        .textContent = currentOriginals[0].text;
+
+    document
+        .getElementById("originalScreen")
+        .scrollTop = 0;
+}
+
+</script>
+</body>
+</html>
