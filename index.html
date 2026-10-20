@@ -2,1463 +2,1772 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>일본어 문장</title>
-<style>
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: #121212;
-    color: #f5f5f5;
-}
-.screen {
-    min-height: 100vh;
-    text-align: center;
-}
-.hidden { display: none !important; }
+    <title>일본어 단어 암기</title>
 
-#mainScreen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-#mainScreen h1 {
-    font-size: 36px;
-    margin-bottom: 35px;
-}
+    <style>
 
-#selectScreen {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-#sentenceArea {
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-}
+        body {
+            margin: 0;
+            height: 100vh;
 
-#sentenceTextArea {
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-}
+            display: flex;
+            justify-content: center;
+            align-items: center;
 
-#sentence {
-width: 90%;
-min-height: 50px;
-display: flex;
-justify-content: center;
-align-items: center;
-font-size: 40px;
-line-height: 1.4;
-word-break: keep-all;
-}
+            background: #121212;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
 
-.buttons {
-    margin-top: 80px;
-}
-button {
-    min-width: 80px;
-    padding: 10px 18px;
-    margin: 5px;
-    font-size: 16px;
-    background: #000000;
-    color: #ffffff;
-    border: 1px solid #ccc;
-    border-radius: 6px;
+        .screen {
+            width: 100%;
+            max-width: none;
+            text-align: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+
+        #mainScreen h1 {
+            font-size: 40px;
+            margin-bottom: 50px;
+        }
+
+        .main-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 500px;
+            margin: 0 auto;
+            gap: 20px 35px;
+       }
+
+        .main-buttons button {
+           width: 40px;
+           height: 80px;
+           padding: 0;
+        }
+
+        #quizWord,
+        #studyWord {
+            font-size: 100px;
+            font-weight: bold;
+
+            width: 100%;
+            height: 140px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+        }
+
+
+        #quizHint {
+            font-size: 35px;
+
+            width: 100%;
+            height: 50px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 20px 0 10px;
+        }
+
+        #quizMeaning {
+            font-size: 30px;
+            color: #f5f5f5;
+
+            width: 100%;
+            height: 40px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin: 0;
+        }
+
+        #checkedScreen h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        #checkedCount {
+            font-size: 18px;
+            color: #f5f5f5;
+            margin-bottom: 25px;
+        }
+
+        #checkedList {
+            width: 100%;
+            max-height: 55vh;
+            overflow-y: auto;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .checked-item {
+            display: flex;
+            align-items: baseline;
+            gap: 18px;
+            padding: 12px 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checked-kanji {
+            font-size: 30px;
+            font-weight: bold;
+            min-width: 110px;
+        }
+
+        .checked-reading {
+            font-size: 18px;
+            color: #f5f5f5;
+            min-width: 110px;
+        }
+
+        .checked-meaning {
+            font-size: 18px;
+        }
+
+    #wordList {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        width: 100%;
+        min-height: 600px;
+        align-content: start;
+    }
+
+    .word-list-item {
+        border: 1px solid #f5f5f5;
+        padding: 12px;
+        text-align: center;
+    }
+
+    .word-list-kanji {
+        font-size: 24px;
+    }
+
+    .word-list-reading {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .word-list-meaning {
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    button {
+    padding: 8px 14px;
+    font-size: 18px;
+
+    border: none;
+    border-radius: 0;
+
+    background: transparent;
+    color: inherit;
+
     cursor: pointer;
 }
 
 button:hover {
-    background: #f5f5f5;
+    opacity: 0.4;
 }
-.bottom-buttons {
+
+        .bookmark-button:hover {
+            color: #f5f5f5;
+            border-color: #f5f5f5;
+            background: #121212;
+        }
+
+        .delete-check-button {
+            margin-left: auto;
+            padding: 7px 12px;
+            font-size: 14px;
+            background: #121212;
+            color: #f5f5f5;
+        }
+
+        .delete-check-button:hover {
+            background: #f5f5f5;
+            color: #121212;
+        }
+
+
+        .quiz-buttons {
+            height: 60px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+
+.study-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5px;
+    gap: 18px;
+    margin-top: 15px;
 }
 
-#reading {
-    min-height: 30px;
-    margin-bottom:0px;
-    font-size: 20px;
-    color: #f5f5f5;
+.study-buttons button {
+    width: 42px;
+    height: 42px;
+    padding: 0;
+
+    border: none;
+    background: transparent;
+    color: inherit;
+
+    font-size: 22px;
+    cursor: pointer;
 }
 
-#originalScreen {
-    min-height: 100vh;
-    padding: 40px 20px;
-    overflow-y: auto;
+.study-buttons button:hover {
+    opacity: 0.5;
 }
 
-#originalText {
-    width: 90%;
-    max-width: 800px;
-    margin: 0 auto;
-    text-align: left;
-    white-space: pre-wrap;
-    font-size: 24px;
-    line-height: 1.8;
+.study-buttons button,
+.study-bottom-buttons button {
+    border: none;
+    background: none;
+    color: inherit;
+    box-shadow: none;
 }
 
-#sentenceGroupScreen,
-#originalGroupScreen {
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    align-items: center;
+.study-buttons button:hover,
+.study-bottom-buttons button:hover {
+    opacity: 0.4;
 }
 
-#sentenceGroupScreen .bottom-buttons,
-#originalGroupScreen .bottom-buttons {
+        .word-list-buttons {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+#wordListPage {
+    min-width: 60px;
+}
+        .home-button {
+            margin-top: 60px;
+
+            background: #121212;
+        }
+
+
+#studyScreen {
+    position: relative;
+    top: 50px;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.study-word-area {
+    position: relative;
+
+    width: 100%;
+    max-width: none;
+
+    height: 180px;
+    margin: 80px auto 10px;
+}
+
+#studyWord {
     position: absolute;
 
-    bottom: 20px;
     left: 50%;
+    top: 50%;
 
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
+
+    width: max-content;
+    max-width: none;
+
+    white-space: nowrap;
+    overflow: visible;
+
+    font-size: 98px;
+    font-weight: 600;
+    line-height: 1.2;
+
+    text-align: center;
 }
 
-.group-buttons {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
+.study-prev {
+    position: absolute;
+    left: calc(50% - 380px);
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-#sentenceScreen {
-    min-height: 100vh;
+.study-next {
+    position: absolute;
+    right: auto;
+    left: calc(50% + 340px);
+    top: 50%;
+    transform: translateY(-50%);
+}
 
+.bookmark-button {
+    position: absolute;
+
+    top: -50px;
+    left: calc(50% + 170px);
+    right: auto;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+    border: none;
+    background: none;
+
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.bookmark-button.active {
+    font-size: 24px;
+}
+
+#studyReading {
+    height: 32px;
+    margin-top: 10px;
+
+    font-size: 25px;
+    line-height: 0;
+}
+
+#studyMeaning {
+    height: 32px;
+    margin-top: 2px;
+
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+#studyCount {
+    margin-top: 12px;
+    margin-bottom: 22px;
+
+    font-size: 15px;
+}
+
+.study-bottom-buttons {
     display: flex;
     justify-content: center;
-    align-items: center;
+    gap: 18px;
+    margin-top: -45px;
 }
 
-/* =========================
-   모바일용
-========================= */
+.study-bottom-buttons button {
+    width: 42px;
+    height: 42px;
+    min-width: 42px;
 
-@media (max-width: 600px) {
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: inherit;
 
-    #mainScreen h1 {
-        font-size: 30px;
-        margin-bottom: 30px;
-    }
+    font-size: 22px;
+    cursor: pointer;
+}
 
-    button {
-        min-width: 70px;
-        min-height: 50px;
-        padding: 10px 14px;
-        margin: 5px;
-        font-size: 18px;
-    }
-
-    #sentence {
-        width: 92%;
-        font-size: 28px;
-        line-height: 1.5;
-    }
-
-    #reading {
-        font-size: 18px;
-    }
-
-    .buttons {
-        margin-top: 50px;
-    }
-
-    .group-buttons {
-        grid-template-columns: repeat(3, 80px);
-        gap: 10px;
-    }
-
-    #originalScreen {
-        padding: 30px 10px;
-    }
-
-    #originalText {
-        width: 92%;
-        font-size: 19px;
-        line-height: 1.8;
-        text-align: left;
-    }
-
-    #sentenceScreen {
-        padding: 20px 0;
-    }
+.study-bottom-buttons button:hover {
+    opacity: 0.5;
 
 }
 
-</style>
+.focus-mode #studyScreen > *:not(.study-word-area):not(#studyReading):not(#studyMeaning) {
+    visibility: hidden;
+}
+
+.focus-mode .study-word-area > * {
+    visibility: hidden;
+}
+
+.focus-mode #studyWord,
+.focus-mode #studyReading,
+.focus-mode #studyMeaning {
+    visibility: visible;
+}
+
+.focus-mode .study-bottom-buttons {
+    visibility: visible;
+}
+
+.focus-mode .focus-button {
+    visibility: visible;
+    opacity: 0;
+}
+
+    </style>
 </head>
 
 <body>
 
+
 <div id="mainScreen" class="screen">
-    <h1>일본어 문장</h1>
-    <button onclick="openSelectScreen()">
-        학습
+
+    <h1>일본어 단어 암기</h1>
+
+    <div class="main-buttons">
+
+ <button onclick="openGroupSelect('study')">
+    학습
+    </button>
+
+    </div>
+
+</div>
+
+
+<div id="groupScreen" class="screen hidden">
+    <h1 id="groupTitle">그룹 선택</h1>
+
+<div class="main-buttons" id="groupButtons">
+    <button onclick="selectGroup('1~6')">1~6</button>
+    <button onclick="selectGroup('ALL')">∞</button>
+</div>
+
+    <button class="home-button" onclick="goHome()">
+        ⌂
+    </button>
+</div>
+
+<div id="wordListScreen" class="screen hidden">
+
+    <h1 id="wordListTitle">≡</h1>
+
+    <div id="wordList"></div>
+
+    <div class="word-list-buttons">
+        <button onclick="prevWordList()">≪</button>
+
+        <div id="wordListPage">1 / 1</div>
+
+        <button onclick="nextWordList()">≫</button>
+    </div>
+
+<button class="home-button" onclick="returnToStudy()">
+    ☜
+</button>
+
+<button class="home-button" onclick="goHome()">
+    ⌂
+</button>
+
+</div>
+
+
+<div id="quizScreen" class="screen hidden">
+
+    <div id="quizWord">
+        -
+    </div>
+
+<div id="quizCount">
+    0 / 0
+</div>
+
+    <div id="quizHint"></div>
+    <div id="quizMeaning"></div>
+
+
+<div class="quiz-buttons">
+
+<button onclick="showQuizAnswerA()">♪</button>
+<button onclick="showQuizAnswerB()">✎</button>
+
+</div>
+
+
+    <div class="quiz-buttons">
+
+        <button onclick="prevQuizWord()">
+            ≪
+        </button>
+
+        <button onclick="nextQuizWord()">
+            ≫
+        </button>
+
+    </div>
+
+
+<button class="home-button" onclick="openGroupSelect('quiz')">
+    ☜
+</button>
+
+<button class="home-button" onclick="goHome()">
+    ⌂
+</button>
+
+<button class="home-button" onclick="openWordList()">
+    ≡
+</button>
+
+</div>
+
+<div id="studyScreen" class="screen hidden">
+
+    <div class="study-word-area">
+
+    <div id="studyReading">
+    </div>
+
+        <button
+            id="studyBookmark"
+            class="bookmark-button"
+            type="button"
+            onclick="toggleStudyCheck()"
+            aria-label="현재 단어 체크"
+            title="현재 단어 체크">
+            ☆
+        </button>
+
+        <button
+            class="study-nav study-prev"
+            onclick="prevStudyWord()">
+            ‹
+        </button>
+
+        <div id="studyWord">
+            ▶︎
+        </div>
+
+        <button
+            class="study-nav study-next"
+            onclick="nextStudyWord()">
+            ›
+        </button>
+
+    </div>
+
+    <div id="studyMeaning">
+    </div>
+
+    <div id="studyCount">
+        0 / 0
+    </div>
+
+    <div class="study-buttons">
+
+    </div>
+
+<div class="study-buttons">
+
+    <button
+        id="studyToggleButton"
+        onclick="toggleStudy()">
+        ▶︎
+    </button>
+
+    <button
+        id="studyAnswerToggle"
+        onclick="toggleStudyAnswer()">
+        ♪
+    </button>
+
+    <button onclick="resetStudy()">
+        ⚄
+    </button>
+
+    <button onclick="openCheckedWords()">
+        ★
+    </button>
+
+    <button onclick="openWordList()">
+        ≡
     </button>
 
 </div>
 
-<div id="selectScreen" class="screen hidden">
+    <div class="study-bottom-buttons">
 
-    <h1>선택</h1>
-    <div class="select-buttons">
-        <button onclick="openSentenceGroups()">
-            문장
+        <button
+            class="home-button"
+            onclick="openGroupSelect('study')">
+            ☜
         </button>
-        <button onclick="openOriginalGroups()">
-            원문
+
+        <button
+            class="home-button"
+            onclick="goHome()">
+            ⌂
         </button>
-    </div>
 
-    <div class="bottom-buttons">
-        <button onclick="goHome()"></button>
-        <button onclick="goBack()">←</button>
     </div>
 
 </div>
 
-<div id="sentenceGroupScreen" class="screen hidden">
 
-    <div class="group-content">
+<div id="checkedScreen" class="screen hidden">
+    <h1>체크한 단어</h1>
 
-        <h1>문장</h1>
+    <div id="checkedCount"></div>
 
-        <div class="group-buttons">
-            <button onclick="openSentence(1)">小一</button>
-            <button onclick="openSentence(2)">小二</button>
-            <button onclick="openSentence(3)">小三</button>
-            <button onclick="openSentence(4)">小四</button>
-            <button onclick="openSentence(5)">小五</button>
-            <button onclick="openSentence(6)">小六</button>
-            <button onclick="openSentence(7)">中一</button>
-            <button onclick="openSentence(8)">中二</button>
-            <button onclick="openSentence(9)">中三</button>
-            <button onclick="openSentence(10)">中四</button>
-            <button onclick="openSentence(11)">中五</button>
-        </div>
+    <div id="checkedList"></div>
 
-    </div>
+    <button class="home-button" onclick="openStudy()">
+        ☜
+    </button>
 
-    <div class="bottom-buttons">
-        <button onclick="goHome()"></button>
-        <button onclick="goBack()">←</button>
-    </div>
+    <button class="delete-all-button" onclick="clearAllCheckedWords()">
+        reset
+    </button>
 
-</div>
-
-<div id="originalGroupScreen" class="screen hidden">
-
-    <div class="group-content">
-
-        <h1>원문</h1>
-
-        <div class="group-buttons">
-            <button onclick="openOriginal(1)">小一</button>
-            <button onclick="openOriginal(2)">小二</button>
-            <button onclick="openOriginal(3)">小三</button>
-            <button onclick="openOriginal(4)">小四</button>
-            <button onclick="openOriginal(5)">小五</button>
-            <button onclick="openOriginal(6)">小六</button>
-            <button onclick="openOriginal(7)">中一</button>
-            <button onclick="openOriginal(8)">中二</button>
-            <button onclick="openOriginal(9)">中三</button>
-            <button onclick="openOriginal(10)">中四</button>
-            <button onclick="openOriginal(11)">中五</button>
-        </div>
-
-    </div>
-
-    <div class="bottom-buttons">
-        <button onclick="goHome()"></button>
-        <button onclick="goBack()">←</button>
-    </div>
-
-    </div>
-</div>
-
-
-<div id="originalScreen" class="screen hidden">
-    <div id="originalText">
-    </div>
-
-    <div class="bottom-buttons">
-        <button onclick="goHome()"></button>
-        <button onclick="goBack()">←</button>
-    </div>
-
-</div>
-
-<div id="sentenceScreen" class="screen hidden">
-    <div id="sentenceArea">
-        <div id="sentenceTextArea">
-            <div id="reading"></div>
-            <div id="sentence">
-                -
-            </div>
-
-        </div>
-
-        <div class="buttons">
-            <button onclick="prevSentence()">
-                ≪
-            </button>
-            <button id="startButton" onclick="toggleAutoPlay()">
-                ▶︎
-            </button>
-            <button onclick="nextSentence()">
-                ≫
-            </button>
-        </div>
-
-
-        <div class="bottom-buttons">
-            <button id="readingButton" onclick="toggleReading()">
-                ★
-            </button>
-            <button onclick="goHome()">
-                
-            </button>
-            <button onclick="goBack()">
-                ←
-            </button>
-            <button onclick="resetSentence()">
-                ⟲
-            </button>
-
-        </div>
-    </div>
+    <button class="home-button" onclick="goHome()">
+        ⌂
+    </button>
 </div>
 
 
 <script>
-
-const originals小一 = [
-    {
-        text: "料理は見た目も大切です。料理をお皿などに入れるときに気をつけたいことは、料理を盛る高さと余白と料理の色の3つです。高さがあるように盛るとおいしそうに見えますし、そこにいろいろな色があれば脳がよく働くことも知られています。また、広い余白は高級なイメージ、狭い余白は親しみを感じさせます。料理を上品に見せたいときは30%以上の余白を残したほうがいいです。ですから大きな入れ物を使ったほうが簡単に上手に盛りつけられる可能性が高いと思います。",
-    },
-];
-
-const originals小二 = [
-    {
-        text: "14階のビルが予想通り森のようになった。1995年に建てた時に南側面の緑化を、多くのビルとは違い草花の代わり76種類の木に決めた。その木が成長しただけでなく長年の間に鳥や風が運んだ種により200種類にも増え、その木から落ちた葉が腐葉土となり、木を育て、雨だけで木々が育つほどになったそうだ。確かに南から見るとビルは森に囲まれている。ビルの外側に造られた階段を上がれは屋上まで15分ほどの登山気分も楽しめるとか。",
-    },
-];
-
-const originals小三 = [
-    {
-        text: "大川さんは毎月月末に10万円ずつ、7月と12月にはボーナスからも30万円ずつ貯金してきた。12月31日に貯金が総額1,000万円になった。貯金は家の購入時の頭金にするつもりだ。子供の教育費の100円を除いた全額が頭金にできる。頭金は普通20%必要だ。来月4ヶ月に子供が小学校に入学するので家を探している。",
-    },
-];
-
-const originals小四 = [
-    {
-        text: "アルコール成分が入っていないノンアルコールビールはビールに似ている味でおいしい。それに酒税もかからないからジュースと同じく安く買える。だから宗教上の理由などでお酒が飲めない人や、車を運転する人、妊娠中の女性の人などお酒を飲んではいけない人に飲まれている。また酒が飲みたくない若い人たちにも人気があって、ビールの売り上げが減少しているのにこちらは売り上げが急増している",
-    },
-];
-
-const originals小五 = [
-    {
-        text: "北病院の面会時間は午後1時から8時までです。小学生以下の方の面会はできません。面会する場合は総合案内所でお名前を記入の上、番号札をもらってよく見えるところにつけてください。病室では地の入院されている方の迷惑にならないように話し声に気をつけてください。病室では面会の方は飲んだり食べたりできません。お酒とたばこは病院内はすべて禁止です。携帯電話は医療機器に悪い影響与える恐れがありますので、病室では電源を切ってください。休憩室でのみご使用できます。休憩室はすべての階にございます。",
-    },
-
-];
-
-const originals小六 = [
-    {
-        text: "地球の温暖化を防ぐために私たち個人でもできることがある。しかしやろうと決心して始めても段々面倒くさくなって止めてしまいがちだ。毎日自分がどのくらい二酸化炭素を減らせたか数字で見ることができればやる気が出るだろう。1日で減らせる主な二酸化炭素の量は以下の通りた。レジ袋をもらわない42g、テレビをつけたままにしない45g、シャワーを出しっぱなしにしない86g、ゴミ出しルールを守って分別する119g、暖房を20度以下にする129g、自動車を使わず電車、自転車、徒歩で移動する400gなどだ。逆に言うと、レジ袋をもらった排出量は42gかかるということになる。",
-    },
-
-];
-
-const originals中一 = [
-    {
-        text: "自分が何かしてもらったとき「〇〇さんに〜していただく」という敬語を使う。しかしこれを「〇〇さんが〜していただく」と間違えて使う人が多い。「が」を使うなら「〇〇さんが〜してくださる」と動詞を変えなければならない。外国人は授業で習うし日本語能力試験にも必ず出題される。外国人の方が正しく使っているようだ。敬語は学校でも習っているが、全然身に付いていな。有名な司会者を始め、政治や経済の重要な位にいる人までが間違える。だから毎日のようにこの間違った敬語をテレビで耳にする一般の人々はこれが正しいと思うようになってしまう。先日ある人が友だちにセーターを作ってもらったことを説明する際に、「友だちが作ってもらった」と言っているのを聞いた。もうここまで来ているのかと驚いた。\n言葉は変化するものだ。「全然」が否定形と一緒に使われなくなって久しい。「ら抜き言葉」も「さ入れ言葉」も仕方がない部分もある。しかし日本語で助詞は一番重要だ。日本語が主語や言わなくても分かる言葉を省略して使うことができるのは助詞があるからだ。もう助詞が正しく使えないなら、もう省略した言い方はできなくなる。何とかしなければならない時期に来ているのではないだろうか。",
-    },
-
-];
-
-const originals中二 = [
-    {
-        text: "誰もが若々しく美しくありたいと願うから薬局の棚は様々な化粧品で溢れている。特に基礎化粧品は、肌の美しさを保つための物なので、最も重要視されている。化粧品会社は美白用、しわ防止用として様々な成分を入れて各社近いを前面に出し競い合っているか、画期的と言えるほど効果がある物はまだない。\nしかし若々しい肌を簡単に手に入れられる可能性が出てきた。しわやしみで悩んでいる人には嬉しい情報である。携帯型3Dスキンプリンターが生体材料を使って皮膚の上に一枚皮膚を重ねることで手に入れられるのである。まずその人の肌を撮影してしわやしみがどこにあるかを探す。そしてその人の肌に合わせて作った色の生体材料のファンデーションを肌全体に塗っていく。全てが自動化されていて、ただプリンターを肌の上で滑らすだけである。しわやしみが多い人ほど仕上がりの違いが実感できるので大喜びする。もうメキャプアーティストのテクニックは必要ない。\nこの発明は化粧品会社には手ごわい競争相手になるだろう。しかし装置で肌そのものがきれいになるわけではなく、化粧するのと同じである。また価格によっては普通の人には手が届かないだろう。だから今ある化粧品は消えることはない。今後もそれぞれ得意な分野での活況が続くことだろう。",
-    },
-
-];
-
-const originals中三 = [
-    {
-        text: "調理ロボットは人手不足や人件費の節約のために開発された。だから人手不足の日本のレストランで使われるのは自然なことだ。しかし、十分な人手があるにもかかわらず、取り入れている国も多い。前述の理由だけでなく調理ロボットに高度の技術を取り入れたことでそのような国にも受け入れられたようだ。例えば誰もが簡単に巻き寿司を作ることはできない。海外では巻き寿司が人気だが寿司職人を雇うのは難しい。しかし巻き寿司が作れるロボットなら材料を入れさえすればあっという間にきれいな寿司ができる。ロボットの値段は性能によっていろいろあるから、自分たちに合わせて手に入れることができる。\nまた物珍しさで人目を引くために調理ロボットを使う店もある。ロボットがたこ焼きを作っているのを見たりするのはお客にとって楽しいことだからだ。店でなく食品工場で活躍する調理機械は主に大量生産するためにお菓子を始め多くの加工食品を作るのに使われている。様々な機械があるが、今一番注目を集めているのは串刺しができる調理機械かもしれない。焼き鳥を始め様々な食品を串刺しにできる。簡単なようでも形が様々な材料を串で刺すのには高度な技術が必要だが、この機械はとうもろこしの粒さえ刺すことができるそうだ。これからも様々な調理ロボットが生まれてますます進化していくことだろう。",
-    },
-
-];
-
-const originals中四 = [
-    {
-        text: "広く海外では日本茶は「グリーンティー」つまり緑のお茶と呼ばれている。「茶色」はお茶の色という意味だが、実際は土のような色である。なぜ茶色が現在のお茶の色と違ってしまったのか。お茶は中国から伝わって来たもので、当時のお茶は釜で炒って揉んで日に干して作ったので色は茶色だった。今の緑色のお茶は煎茶といって江戸時代に製法が完成した。紅茶は発酵させたお茶で、ウーロン茶は半分発酵させる、煎茶は全く発酵させないで作る。同じお茶の葉を使っても全く違う味や色のお茶ができる。\nお茶は昔は貴重だったので、薬として使われていた。お茶の木がたくさん植えられるようになると一般の人もお茶を飲むようになった。多くの人は煎茶を飲んでいる。お茶を「茶道」という芸術に完成させたのは「千利体」である。なぜ本場の中国で芸術とならなかったのか不思議に思ったが、中国人はおいしく飲むことを第一に考えていたからだという話を聞いてそれはそうだと思った。これに対して日本の茶道は花や書を飾った静かで落ち着いた雰囲気がある茶室で、お茶を飲んだり道具や入れ方を見て楽しむ。茶道で使われるお茶は煎茶ではなく、葉を全部後にした抹茶だからかなり苦い。私は初めて抹茶を飲んでおいしいと言う人にめったに会ったことがない。\nお茶は体に良いから健康のために飲むことも多い。海外の人にも砂糖やミルクなど入れないで飲むお茶の人気が出てきたそうだ。また抹茶味は日本の味として多くの外国人に人気だそうだ。抹茶が入れているチョコレートを箱買いしている外国人が大勢いるのである。",
-    },
-
-];
-
-const originals中五 = [
-    {
-        text: "2009年から日本で一般の市民が裁判に参加するようになった。しかし呼び出されても約3人に1人が辞退しているそうだ。辞退できるのは本人や家族の病気やケガ、葬式や出産、重要な仕事などの事情がある場合だ。また呼び出された人のうちの6人しか裁判員になれないので呼び出す人数が多すぎるという不満の声が挙がっている。\n日当は裁判員を選ぶ日は8千円以内、裁判員を務めた日は1万円以内だそうだ。額が多いとか少ないとか言われているが、いくら高額でも嫌だと言う人もいる。裁判員が参加する裁判は泥棒などという軽い刑ではなく殺人など重大な事件だから、死刑を言い渡さなければならないこともあって、裁判員になりたくないと言い人もいる。裁判官と裁判員で話し合って多数決で判決を出すから、裁判員も責任が大きい。多数決では必ず裁判官1人以上が賛成する必要がある。\n一般人の参加によって家族間の事件は同情して刑が軽くなり、一方性犯罪は重くなる傾向になった。よくも悪くも普通の人の考え方に近づいているようである。また市民の裁判に対する関心が高まっている。これが今回一番よかったことなのではないだろうか。",
-    },
-
-];
-
-const sentences小一 = [
-    {
-        sentence: "料理は見た目も大切です。",
-        reading: "りょうりはみためもたいせつです。",
-    },
-    {
-        sentence: "料理をお皿などに入れるときに気をつけたいことは、",
-        reading: "りょうりをおさらなどにいれるときにきをつけたいことは、",
-    },
-    {
-        sentence: "料理を盛る高さと余白と料理の色の3つです。",
-        reading: "りょうりをもるたかさとよはくとりょうりのいろのみっつです。",
-    },
-    {
-        sentence: "高さがあるように盛るとおいしそうに見えますし",
-        reading: "たかさがあるようにもるとあおいしそうにみえますし",
-    },
-    {
-        sentence: "そこにいろいろな色があれば",
-        reading: "そこにいろいろないろがあれば",
-    },
-    {
-        sentence: "脳がよく働くことも知られています。",
-        reading: "のうがよくはたらくこともしられています。",
-    },
-    {
-        sentence: "また、広い余白は高級なイメージ、",
-        reading: "また、ひといよはくはこうきゅうなイメージ、",
-    },
-    {
-        sentence: "狭い余白は親しみを感じさせます。",
-        reading: "せまいよはくはしたしみをかんじさせます",
-    },
-    {
-        sentence: "料理を上品に見せたいときは",
-        reading: "りょうりをじょうひんにみせたいときは",
-    },
-    {
-        sentence: "30%以上の余白を残したほうがいいです。",
-        reading: "30％いじょうのよはくをのこしたほうがいいです。",
-    },
-    {
-        sentence: "ですから大きな入れ物を使ったほうが",
-        reading: "ですからおおきないれものをつかったほうが",
-    },
-    {
-        sentence: "簡単に上手に盛りつけられる可能性が高いと思います。",
-        reading: "かんたんにじょうずにもりつけられるかのうせいがたかいとおもいます。",
-    },
-];
-
-const sentences小二 = [
-    {
-        sentence: "14階のビルが予想通り森のようになった。",
-        reading: "14かいのビルがよそうどうりもりのようになった。",
-    },
-    {
-        sentence: "1995年に建てた時に南側面の緑化を、",
-        reading: "1995ねんにたてたときにみなみがわめんのりょっかを、",
-    },
-    {
-        sentence: "多くのビルとは違い草花の代わり76種類の木に決めた。",
-        reading: "おおくのビルとはちがいくさばなのかわり76しゅるいのきにきめた。",
-    },
-    {
-        sentence: "その木が成長しただけでなく",
-        reading: "そのきがせいちょうしただけでなく",
-    },
-    {
-        sentence: "長年の間に鳥や風が運んだ種により200種類にも増え、",
-        reading: "ながねんのあいだにとりやかぜがはこんだたねにより200しゅるいにもふえ、",
-    },
-    {
-        sentence: "その木から落ちた葉が腐葉土となり、",
-        reading: "そのきからおちたはがふようどとなり、",
-    },
-    {
-        sentence: "木を育て、雨だけで木々が育つほどになったそうだ。",
-        reading: "きをそだて、あめだけできぎがそだつほどになったそうだ。",
-    },
-    {
-        sentence: "確かに南から見るとビルは森に囲まれている。",
-        reading: "たしかにみなみからみるとビルはもりにかこまれている。",
-    },
-    {
-        sentence: "ビルの外側に造られた階段を上がれは屋上まで",
-        reading: "ビルのそとがわにつくられたかいだんをあがれはおくじょうまで",
-    },
-    {
-        sentence: "15分ほどの登山気分も楽しめるとか。",
-        reading: "15ぶんほどのとざんきぶんもたのしめるとか。",
-    },
-];
-
-const sentences小三 = [
-    {
-        sentence: "大川さんは毎月月末に10万円ずつ、",
-        reading: "おおかわさんはまいげつげつまつに10まんえんずつ",
-    },
-    {
-        sentence: "7月と12月にはボーナスからも30万円ずつ貯金してきた。",
-        reading: "７がつと１２がつにはボーナスからも30まんえんずつちょきんしてきた。",
-    },
-    {
-        sentence: "12月31日に貯金が総額1,000万円になった。",
-        reading: "12がつ31にちにちょきんがそうがく1,000まんえんになった。",
-    },
-    {
-        sentence: "貯金は家の購入時の頭金にするつもりだ。",
-        reading: "ちょきんはいえのこうにょうしのあたまきんにするつもりだ。",
-    },
-    {
-        sentence: "子供の教育費の100万円を除いた全額が頭金にできる。",
-        reading: "こどものきょういくひの100まんえんをのぞいたぜんがくがあたまきんにできる。",
-    },
-    {
-        sentence: "頭金は普通20%必要だ。",
-        reading: "あたまきんはふつう20％ひつようだ。",
-    },
-    {
-        sentence: "来年4月に子供が小学校に入学するので家を探している。",
-        reading: "らいげつしがつにこどもがしょうがくするのでいえをさがしてる。",
-    },
-];
-
-const sentences小四 = [
-    {
-        sentence: "アルコール成分が入っていないノンアルコールビールは",
-        reading: "アルコールせいぶんがはいっていないノンアルコールビールは",
-    },
-    {
-        sentence: "ビールに似ている味でおいしい。",
-        reading: "ビールににているあじであいしい",
-    },
-    {
-        sentence: "それに酒税もかからないからジュースと同じく安く買える。",
-        reading: "それにしゅぜいもかからないからジュースとおなじくやすくかえる",
-    },
-    {
-        sentence: "だから宗教上の理由などでお酒が飲めない人や、",
-        reading: "だからしゅうきょうじょうのりゆなどでおさけがのめないひとや",
-    },
-    {
-        sentence: "車を運転する人、妊娠中の女性の人など",
-        reading: "くるまをうんてんするひと、にんしんちゅのじょせいのひとなど",
-    },
-    {
-        sentence: "お酒を飲んではいけない人に飲まれている。",
-        reading: "おさけをのんではいけないひとにのまれている。",
-    },
-    {
-        sentence: "また酒が飲みたくない若い人たちにも人気があって",
-        reading: "またさけがのみたくないわかいひとたちもにんきがあって",
-    },
-    {
-        sentence: "ビールの売り上げが減少しているのに",
-        reading: "ビールのうりあげがげんしょうしているのに",
-    },
-    {
-        sentence: "こちらは売り上げが急増している。",
-        reading: "こちらはうりあげがきゅうぞうしている。",
-    },
-];
-
-const sentences小五 = [
-    {
-        sentence: "北病院の面会時間は午後1時から8時までです。",
-        reading: "きたびょういんのめんかいじかんはごご1じまでです。",
-    },
-    {
-        sentence: "小学生以下の方の面会はできません。",
-        reading: "しょうかくせいいかのかたのめんかいはできません",
-    },
-    {
-        sentence: "面会する場合は総合案内所でお名前を記入の上、",
-        reading: "めんかいするばあいはそおごおあんないじょでおなまえをきにゅうのうえ、",
-    },
-    {
-        sentence: "番号札をもらってよく見えるところにつけてください。",
-        reading: "ばんごうふたをもらってよくみえるところにつけてください。",
-    },
-    {
-        sentence: "病室では地の入院されている方の迷惑にならないように",
-        reading: "びょうしつではちのにゅういんされているかたのめいわくにならないように",
-    },
-    {
-        sentence: "話し声に気をつけてください。",
-        reading: "はなしごえにきをつけてください。",
-    },
-    {
-        sentence: "病室では面会の方は飲んだり食べたりできません。",
-        reading: "びょうしつではめんかいのかたはのんだりたべたりできません。",
-    },
-    {
-        sentence: "お酒とたばこは病院内はすべて禁止です。",
-        reading: "おさけとたばこはびょういんないはすべてきんしです。",
-    },
-    {
-        sentence: "携帯電話は医療機器に悪い影響を与える恐れがありますので、",
-        reading: "けいたいでんわはいりょうききにわるいえいきょうをあたえるおそれがありますので、",
-    },
-    {
-        sentence: "病室では電源を切ってください。",
-        reading: "びょういんではでんげんをきってください。",
-    },
-    {
-        sentence: "休憩室でのみご使用できます。",
-        reading: "きゅうけいしつでのみごしようできます。",
-    },
-    {
-        sentence: "休憩室はすべての階にございます。",
-        reading: "きゅうけいしつはすべてのかいにごじゃいます。",
-    },
-];
-
-const sentences小六 = [
-    {
-        sentence: "地球の温暖化を防ぐために私たち個人でもできることがある。",
-        reading: "ちきゅうのおんだんかをふせぐためにわたしたちこじんでもできることがある。",
-    },
-    {
-        sentence: "しかしやろうと決心して始めても",
-        reading: "しかしやろうとけっしんしてはじめても",
-    },
-    {
-        sentence: "段々面倒くさくなって止めてしまいがちだ。",
-        reading: "だんだんめんどくさくなってとめてしまいがちだ。",
-    },
-    {
-        sentence: "毎日自分がどのくらい二酸化炭素を減らせたか",
-        reading: "まいにちじぶんがどのくらいにさんかたんそをへらせたか",
-    },
-    {
-        sentence: "数字で見ることができればやる気が出るだろう。",
-        reading: "すうじでみることができればやるきがでるだろう。",
-    },
-    {
-        sentence: "1日で減らせる主な二酸化炭素の量は以下の通りた。",
-        reading: "1にちでへらせるおもなにさんかたんそのりょうはいかのとおりだ。",
-    },
-    {
-        sentence: "レジ袋をもらわない42g、テレビをつけたままにしない45g、",
-        reading: "レジぶくろもらわない42g、テレビをつけたままにしない45g、",
-    },
-    {
-        sentence: "シャワーを出しっぱなしにしない86g、",
-        reading: "シャワーをだしっぱなしにしない86g、",
-    },
-    {
-        sentence: "ゴミ出しルールを守って分別する119g、",
-        reading: "ゴミだしルールブをまもってぶんべつする119g、",
-    },
-    {
-        sentence: "暖房を20度以下にする129g、",
-        reading: "だんぼうを20どいかする129g、",
-    },
-    {
-        sentence: "自動車を使わず電車、自転車、徒歩で移動する400gなどだ。",
-        reading: "じどうしゃをつわすでんしゃ、じてんしゃ、とほでいどうする400gなどだ。",
-    },
-    {
-        sentence: "逆に言うと、レジ袋をもらった排出量は42gかかるということになる。",
-        reading: "ぎゃくにいうと、レジぶくろをもらったはいしゅつりょうは42gかかるということになる。",
-    },
-];
-
-const sentences中一 = [
-
-    {
-        sentence: "自分が何かしてもらったとき",
-        reading: "じぶんがなにかしてもらったとき",
-    },
-    {
-        sentence: "「〇〇さんに〜していただく」という敬語を使う。",
-        reading: "「〇〇さんに〜していただく」というけいごをつかう。",
-    },
-    {
-        sentence: "しかしこれを「〇〇さんが〜していただく」と",
-        reading: "しかしこれを「〇〇さんが〜していただく」と",
-    },
-    {
-        sentence: "間違えて使う人が多い。",
-        reading: "まちがえてつかうひとがおおい。",
-    },
-    {
-        sentence: "「が」を使うなら「〇〇さんが〜してくださる」と",
-        reading: "「が」をつかうなら「〇〇さんが〜してくださる」と",
-    },
-    {
-        sentence: "動詞を変えなければならない。",
-        reading: "どうしをかえなければならない",
-    },
-    {
-        sentence: "外国人は授業で習うし",
-        reading: "がいこくじんはじゅぎょうでならうし",
-    },
-    {   sentence: "日本語能力試験にも必ず出題される。",
-        reading: "にほんごのうりょくしけんにもかならずしゅつだいされる",
-    },
-    {
-        sentence: "外国人の方が正しく使っているようだ。",
-        reading: "がいこくじんのかたがただしくつかっているようだ。",
-    },
-    {
-        sentence: "敬語は学校でも習っているが、",
-        reading: "けいごはがっこでもならっているが",
-    },
-    {
-        sentence: "全然身に付いていない。",
-        reading: "ぜんぜんみについていない",
-    },
-    {
-        sentence: "有名な司会者を始め、",
-        reading: "ゆうめいなしかいしゃをはじめ、",
-    },
-    {
-        sentence: "政治や経済の重要な地位にいる人までが間違える。",
-        reading: "せいじやけいざいのじゅうようなちいにいるひとまでがまちがえる。",
-    },
-    {
-        sentence: "だから毎日のようにこの間違った敬語をテレビで耳にする",
-        reading: "だからまいにちのようにこのまちがったけいごをテレビでみみにする",
-    },
-    {
-        sentence: "一般の人々はこれが正しいと思うようになってしまう。",
-        reading: "いっぱんのひとびとはこれがただしいとおもうようになってしまう。",
-    },
-    {
-        sentence: "先日ある人が友だちにセーターを作ってもらったことを",
-        reading: "せんじつあるひとがともだちにセーターをつくってもらったことを",
-    },
-    {
-        sentence: "説明する際に、「友だちが作ってもらった」と言っているのを聞いた。",
-        reading: "せつめいするさいに、「ともだちがつくってもらった」といっているのをきいた。",
-    },
-    {
-        sentence: "もうここまで来ているのかと驚いた。",
-        reading: "もうここまできているのかとおどろいた。",
-    },
-    {
-        sentence: "言葉は変化するものだ。",
-        reading: "ことばはへんかするものだ",
-    },
-    {
-        sentence: "「全然」が否定形と一緒に使われなくなって久しい。",
-        reading: "「ぜんぜん」がひていけいといっしょにつかわれなくなってひさしい。",
-    },
-    {
-        sentence: "「ら抜き言葉」も「さ入れ言葉」も仕方がない部分もある。",
-        reading: "「らぬきことば」も「さいれことば」もしかたがないぶぶんもある。",
-    },
-    {
-        sentence: "しかし日本語で助詞は一番重要だ。",
-        reading: "しかしにほんごでじょしはいちばんじゅようだ",
-    },
-    {
-        sentence: "日本語が主語や言わなくても分かる言葉を",
-        reading: "にほんごがしゅごやいわなくてもわかることばを",
-    },
-    {
-        sentence: "省略して使うことができるのは助詞があるからだ。",
-        reading: "しょうりゃくしてつかうことができるのはじょしがあるからだ。",
-    },
-    {
-        sentence: "もう助詞が正しく使えないなら、",
-        reading: "もうじょしがただしくつかえないなら、",
-    },
-    {
-        sentence: "もう省略した言い方はできなくなる。",
-        reading: "もうしょうりゃくしていいかたはできなくなる。",
-    },
-    {
-        sentence: "何とかしなければならない時期に来ているのではないだろうか。",
-        reading: "なんとかしなければならないじょしにきているのではないだろうか。",
-    },
-
-];
-
-const sentences中二 = [
-
-    {
-        sentence: "誰もが若々しく美しくありたいと願うから",
-        reading: "だれもがわかわかしくうつくしくありたいとねがうから",
-    },
-    {
-        sentence: "薬局の棚は様々な化粧品で溢れている",
-        reading: "やっきょくのたなはさまざまなけしょうひんであふれている。",
-    },
-    {
-        sentence: "特に基礎化粧品は、肌の美しさを保つための物なので、",
-        reading: "とくにきそけしょうひんは、はだのうつくしさをたもつためのものなので、",
-    },
-    {
-        sentence: "最も重要視されている。",
-        reading: "もっともじゅうようしされている。",
-    },
-    {
-        sentence: "化粧品会社は美白用、しわ防止用として",
-        reading: "けしょうひんがいしゃはびはくよう、しわぼうしようとして",
-    },
-    {
-        sentence: "様々な成分を入れて各社近いを前面に出し競い合っているか、",
-        reading: "さまざまなせいぶんをいれてかくしゃちかいをぜんめんにだしきそいあっているか、",
-    },
-    {
-        sentence: "画期的と言えるほど効果がある物はまだない",
-        reading: "かっきてきといえるほどこうかがあるものはまだない。",
-    },
-    {
-        sentence: "しかし若々しい肌を簡単に手に入れられる可能性が出てきた",
-        reading: "しかしわかわかしいはだをかんたんにてにいれられるかのうせいがでてきた。",
-    },
-    {
-        sentence: "しわやしみで悩んでいる人には嬉しい情報である。",
-        reading: "しわやしみでなやんでいるひとにはうれしいじょうほうである。",
-    },
-    {
-        sentence: "携帯型3Dスキンプリンターが生体材料を使って",
-        reading: "けいたいがた3Dスキンプリンターがせいたいざいりょうをつかって",
-    },
-    {
-        sentence: "皮膚の上に一枚皮膚を重ねることで手に入れられるのである。",
-        reading: "ひふのうえにいちまいひふをかさねることでてにいれられるのである。",
-    },
-    {
-        sentence: "まずその人の肌を撮影してしわやしみがどこにあるかを探す。",
-        reading: "まずそのひとのはだをさつえいしてしわやしみがどこにあるかをさがす。",
-    },
-    {
-        sentence: "そしてその人の肌に合わせて作った色の生体材料の",
-        reading: "そしてそのひとのはだにあわせてつくったいろのせいたいざいりょうの",
-    },
-    {
-        sentence: "ファンデーションを肌全体に塗っていく。",
-        reading: "ファンデーションをはだぜんたいにぬっていく。",
-    },
-    {
-        sentence: "全てが自動化されていて、",
-        reading: "すべてがじどうかされていて、",
-    },
-    {
-        sentence: "ただプリンターを肌の上で滑らすだけである。",
-        reading: "ただプリンターをはだのうえですべらすだけである。",
-    },
-    {
-        sentence: "しわやしみが多い人ほど仕上がりの違いが実感できるので大喜びする。",
-        reading: "しわやしみがおおいひとほどしあがりのちがいがじっかんできるのでおおよろこびする。",
-    },
-    {
-        sentence: "もうメキャプアーティストのテクニックは必要ない。",
-        reading: "もうメキャプアーティストのテクニックはひつようない。",
-    },
-    {
-        sentence: "この発明は化粧品会社には手ごわい競争相手になるだろう。",
-        reading: "このはつめいはけしょうひんがいしゃにはてごわいきょうそうあいてになるだろう。",
-    },
-    {
-        sentence: "しかし装置で肌そのものがきれいになるわけではなく、",
-        reading: "しかしそうちではだそのものがきれいになるわけではなく、",
-    },
-    {
-        sentence: "化粧するのと同じである。",
-        reading: "けしょうするのとおなじである。",
-    },
-    {
-        sentence: "また価格によっては普通の人には手が届かないだろう。",
-        reading: "またかかくによってはふつうのひとにはてがとどかないだろう。",
-    },
-    {
-        sentence: "だから今ある化粧品は消えることはない。",
-        reading: "だからいまあるけしょうひんはきえることはない。",
-    },
-    {
-        sentence: "今後もそれぞれ得意な分野での活況が続くことだろう。",
-        reading: "こんごもそれぞれとくいなぶんやでのかっきょうがつづくことだろう。",
-    },
-
-];
-
-const sentences中三 = [
-
-    {
-        sentence: "調理ロボットは人手不足や人件費の節約のために開発された。",
-        reading: "ちょうりロボットはひとでぶそくやじんけんひのせつやくのためにかいはつされた。",
-    },
-    {
-        sentence: "だから人手不足の日本のレストランで使われるのは自然なことだ。",
-        reading: "だからひとでぶそくのにほんのレストランでつかわれるのはしぜんなことだ。",
-    },
-    {
-        sentence: "しかし、十分な人手があるにもかかわらず、取り入れている国も多い。",
-        reading: "しかし、じゅうぶんなひとでがあるにもかかわらず、とりいれているくにもおおい。",
-    },
-    {
-        sentence: "前述の理由だけでなく調理ロボットに高度の技術を取り入れたことで",
-        reading: "ぜんじゅつのりゆうだけでなくちょうりロボットにこうどのぎじゅつをとりいれたことで",
-    },
-    {
-        sentence: "そのような国にも受け入れられたようだ。",
-        reading: "そのようなくににも受けいれられたようだ。",
-    },
-    {
-        sentence: "例えば誰もが簡単に巻き寿司を作ることはできない。",
-        reading: "たとえばだれもがかんたんにまきずしをつくることはできない。",
-    },
-    {
-        sentence: "海外では巻き寿司が人気だが寿司職人を雇うのは難しい。",
-        reading: "かいがいではまきずしがにんきだがすししょくにんをやとうのはむずかしい。",
-    },
-    {
-        sentence: "しかし巻き寿司が作れるロボットなら",
-        reading: "しかしまきずしがつくれるロボットなら",
-    },
-    {
-        sentence: "材料を入れさえすればあっという間にきれいな寿司ができる。",
-        reading: "ざいりょうをいれさえすればあっというまにきれいなすしができる。",
-    },
-    {
-        sentence: "ロボットの値段は性能によっていろいろあるから、",
-        reading: "ロボットのねだんはせいのうによっていろいろあるから、",
-    },
-    {
-        sentence: "自分たちに合わせて手に入れることができる。",
-        reading: "じぶんたちにあわせててにいれることができる。",
-    },
-    {
-        sentence: "また物珍しさで人目を引くために調理ロボットを使う店もある。",
-        reading: "またものめずらしさでひとめをひくためにちょうりロボットをつかうみせもある。",
-    },
-    {
-        sentence: "ロボットがたこ焼きを作っているのを見たりするのは",
-        reading: "ロボットがたこやきをつくっているのをみたりするのは",
-    },
-    {
-        sentence: "お客にとって楽しいことだからだ。",
-        reading: "おきゃくにとってたのしいことだからだ。",
-    },
-    {
-        sentence: "店でなく食品工場で活躍する調理機械は",
-        reading: "みせでなくしょくひんこうじょうでかつやくするちょうりきかいは",
-    },
-    {
-        sentence: "主に大量生産するためにお菓子を始め",
-        reading: "おもにたいりょうせいさんするためにおかしをはじめ",
-    },
-    {
-        sentence: "多くの加工食品を作るのに使われている。",
-        reading: "おおくのかこうしょくひんをつくるのにつかわれている。",
-    },
-    {
-        sentence: "様々な機械があるが、今一番注目を集めているのは",
-        reading: "さまざまなきかいがあるが、いまいちばんちゅうもくをあつめているのは",
-    },
-    {
-        sentence: "串刺しができる調理機械かもしれない。",
-        reading: "くしざしができるちょうりきかいかもしれない。",
-    },
-    {
-        sentence: "焼き鳥を始め様々な食品を串刺しにできる。",
-        reading: "やきとりをはじめさまざまなしょくひんをくしざしにできる。",
-    },
-    {
-        sentence: "簡単なようでも形が様々な材料を",
-        reading: "かんたんなようでもかたちがさまざまなざいりょうを",
-    },
-    {
-        sentence: "串で刺すのには高度な技術が必要だが、",
-        reading: "くしでさすのにはこうどなぎじゅつがひつようだが、",
-    },
-    {
-        sentence: "この機械はとうもろこしの粒さえ刺すことができるそうだ。",
-        reading: "このきかいはとうもろこしのつぶさえさすことができるそうだ。",
-    },
-    {
-        sentence: "これからも様々な調理ロボットが生まれて",
-        reading: "これからもさまざまなちょうりロボットがうまれて",
-    },
-    {
-        sentence: "ますます進化していくことだろう。",
-        reading: "ますますしんかしていくことだろう。",
-    },
-
-];
-
-const sentences中四 = [
-
-    {
-        sentence: "調理ロボットは人手不足や人件費の節約のために開発された。",
-        reading: "ちょうりロボットはひとでふそくやじんけんひのせつやくのためにかいはつされた。",
-    },
-    {
-        sentence: "だから人手不足の日本のレストランで使われるのは自然なことだ。",
-        reading: "だからひとでふそくのにほんのレストランでつかわれるのはしぜんなことだ。",
-    },
-    {
-        sentence: "しかし、十分な人手があるにもかかわらず、取り入れている国も多い",
-        reading: "しかし、じゅっぶんなひとでがあるにもかかわらず、とりいれているくにもおおい。",
-    },
-    {
-        sentence: "前述の理由だけでなく調理ロボットに高度の技術を取り入れたことで",
-        reading: "ぜんじゅつのりゆうだけでなくちょうりロビッとにこうどのぎじゅつをとりいれたことで",
-    },
-    {
-        sentence: "そのような国にも受け入れられたようだ。",
-        reading: "そのようなくににもうけいれられたようだ。",
-    },
-    {
-        sentence: "例えば誰もが簡単に巻き寿司を作ることはできない",
-        reading: "たとえばだれもがかんたんにまきすしをつくることはできない",
-    },
-    {
-        sentence: "海外では巻き寿司が人気だが寿司職人を雇うのは難しい",
-        reading: "かいがいではまきずしがにんきだがすししょくにんをやとうのはむずかしい",
-    },
-    {
-        sentence: "しかし巻き寿司が作れるロボットなら",
-        reading: "しかしまきずしがつくれるロボットなら",
-    },
-    {
-        sentence: "材料を入れさえすればあっという間にきれいな寿司ができる。",
-        reading: "ざいりょうをいれさえすればあっというあいだにきれいなすしができる。",
-    },
-    {
-        sentence: "ロボットの値段は性能によっていろいろあるから、",
-        reading: "ロボットのねだんはせいのうによっていろいろあるから、",
-    },
-    {
-        sentence: "自分たちに合わせて手に入れることができる。",
-        reading: "じぶんたちにあわせててにいれることができる。",
-    },
-    {
-        sentence: "また物珍しさで人目を引くために調理ロボットを使う店もある。",
-        reading: "またものめずらしさでひとめをひくためにちょうりロボットをつかうみせもある。",
-    },
-    {
-        sentence: "ロボットがたこ焼きを作っているのを見たりするのは",
-        reading: "ロボットだたこやきをつくっているのをみたちするのは",
-    },
-    {
-        sentence: "お客にとって楽しいことだからだ。",
-        reading: "おきゃくにとってたのしいことだからだ。",
-    },
-    {
-        sentence: "店でなく食品工場で活躍する調理機械は",
-        reading: "みせでなくしょくひんこうじでかつやくするちょうりきかいは",
-    },
-    {
-        sentence: "主に大量生産するためにお菓子を始め",
-        reading: "おもにたいりょうせいさんするためにおかしをはじめ",
-    },
-    {
-        sentence: "多くの加工食品を作るのに使われている。",
-        reading: "おおくのかこうしょくひんをつくるのにつかわれてうる。",
-    },
-    {
-        sentence: "様々な機械があるが、今一番注目を集めているのは",
-        reading: "さまざまなきかいがあるが、いまいっばんちゅうもくをあつめているのは",
-    },
-    {
-        sentence: "串刺しができる調理機械かもしれない。",
-        reading: "くしざしができるちょうりきかいかもしれない。",
-    },
-    {
-        sentence: "焼き鳥を始め様々な食品を串刺しにできる。",
-        reading: "やきとりをはじめさまざまなしょくひんをくしざしにできる。",
-    },
-    {
-        sentence: "簡単なようでも形が様々な材料を",
-        reading: "かんたんなようもかたちがさまざまなざいりょうを",
-    },
-    {
-        sentence: "串で刺すのには高度な技術が必要だが、",
-        reading: "くしでさすのにはこうどなぎじゅつがひつようだが",
-    },
-    {
-        sentence: "この機械はとうもろこしの粒さえ刺すことができるそうだ。",
-        reading: "このきかいはとうもろうこしのつぶだえさすことができるそう",
-    },
-    {
-        sentence: "これからも様々な調理ロボットが生まれて",
-        reading: "これからもさまざまなちょうりロボットがうまれて",
-    },
-    {
-        sentence: "ますます進化していくことだろう。",
-        reading: "ますますしんかしていくことだろう。",
-    },
-
-];
-
-const sentences中五 = [
-
-    {
-        sentence: "2009年から日本で一般の市民が裁判に参加するようになった。",
-        reading: "2009ねんからにほんでいっぱんのしみんがさいばんにさんかするようになった。",
-    },
-    {
-        sentence: "しかし呼び出されても約3人に1人が辞退しているそうだ。",
-        reading: "しかしよびだされてもやく3にんに1じんがじたいじているそうだ。",
-    },
-    {
-        sentence: "辞退できるのは本人や家族の病気やケガ、",
-        reading: "じたいできるのはほんにんやかぞくのびょうきやけが、",
-    },
-    {
-        sentence: "葬式や出産、重要な仕事などの事情がある場合だ。",
-        reading: "そうしきやしゅっさん、じゅうようなしごとなどのじじょうがあるばあいだ。",
-    },
-    {
-        sentence: "また呼び出された人のうちの6人しか裁判員になれないので",
-        reading: "またよびだされたひとのうちの6じんがさいばんいんになれないので",
-    },
-    {
-        sentence: "呼び出す人数が多すぎるという不満の声が挙がっている。",
-        reading: "よびだすにんすうがおおすぎるというふまんのこえがあがっている",
-    },
-    {
-        sentence: "日当は裁判員を選ぶ日は8千円以内、",
-        reading: "にっとうはさいばんいんをえらぶひは８せんえんいない、",
-    },
-    {
-        sentence: "裁判員を務めた日は1万円以内だそうだ。",
-        reading: "さいばんいんをつとめたひは1まんえんいないだそうだ。",
-    },
-    {
-        sentence: "額が多いとか少ないとか言われているが、",
-        reading: "かくがおおいとすくないとかいわれているか、",
-    },
-    {
-        sentence: "いくら高額でも嫌だと言う人もいる。",
-        reading: "いくらこうがくでもきらいだというひともいる。",
-    },
-    {
-        sentence: "裁判員が参加する裁判は泥棒などという",
-        reading: "さいばんがさんかするさいばんはどろぼうなどという",
-    },
-    {
-        sentence: "軽い刑ではなく殺人など重大な事件だから、",
-        reading: "かるいけいではなくさつじんなどじゅうだいなじけんだから、",
-    },
-    {
-        sentence: "死刑を言い渡さなければならないこともあって、",
-        reading: "しけいをいいわたさなければならないこともあって、",
-    },
-    {
-        sentence: "裁判員になりたくないと言い人もいる。",
-        reading: "さいばんいんになりたくないというひともいる。",
-    },
-    {
-        sentence: "裁判官と裁判員で話し合って多数決で判決を出すから、",
-        reading: "さいばんかんとさいばんいんではなしあってたすうけつではんけつをだすから、",
-    },
-    {
-        sentence: "裁判員も責任が大きい。",
-        reading: "さいばんいんもせきにんがおおきい。",
-    },
-    {
-        sentence: "多数決では必ず裁判官1人以上が賛成する必要がある。",
-        reading: "たすうけつではかならずさいばんかんひとりいじょうさんせいするひつようがある。",
-    },
-    {
-        sentence: "一般人の参加によって家族間の事件は同情して刑が軽くなり、",
-        reading: "いっぱんじんのさんかによってかぞくあいだのじけんはどうじょうしてけいがかるくなり、",
-    },
-    {
-        sentence: "一方性犯罪は重くなる傾向になった。",
-        reading: "いっぽうせいはんざいはおもくなるけいこうになった。",
-    },
-    {
-        sentence: "よくも悪くも普通の人の考え方に近づいているようである。",
-        reading: "よくもわるくもふつうのひとのかんがえかたにちかづいているようである。",
-    },
-    {
-        sentence: "また市民の裁判に対する関心が高まっている。",
-        reading: "またしみんのさいばんにたいするかんしんがたかまっている。",
-    },
-    {
-        sentence: "これが今回一番よかったことなのではないだろうか。",
-        reading: "これがこんかいいちばんよかったことなのではないだろうか。",
-    },
-
-];
-
-
-let currentIndex = 0;
-let currentSentences = sentences小一;
-let autoTimer = null;
-let isPlaying = false;
-let showReading = false;
-
-const AUTO_INTERVAL = 2000;
-
-function openSentence(section) {
-
-    if (section === 1) {
-        currentSentences = sentences小一;
-    } else if (section === 2) {
-        currentSentences = sentences小二;
-    } else if (section === 3) {
-        currentSentences = sentences小三;
-    } else if (section === 4) {
-        currentSentences = sentences小四;
-    } else if (section === 5) {
-        currentSentences = sentences小五;
-    } else if (section === 6) {
-        currentSentences = sentences小六;
-    } else if (section === 7) {
-        currentSentences = sentences中一;
-    } else if (section === 8) {
-        currentSentences = sentences中二;
-    } else if (section === 9) {
-        currentSentences = sentences中三;
-    } else if (section === 10) {
-        currentSentences = sentences中四;
-    } else if (section === 11) {
-        currentSentences = sentences中五;
-    }
-
-    currentIndex = 0;
-
-    document.getElementById("sentenceGroupScreen").classList.add("hidden");
-    document.getElementById("sentenceScreen").classList.remove("hidden");
-
-    showSentence();
+function hideAllScreens() {
+    document.getElementById("mainScreen").classList.add("hidden");
+    document.getElementById("quizScreen").classList.add("hidden");
+    document.getElementById("studyScreen").classList.add("hidden");
+    document.getElementById("checkedScreen").classList.add("hidden");
+    document.getElementById("groupScreen").classList.add("hidden");
+    document.getElementById("wordListScreen").classList.add("hidden");
 }
+
+
+const words = [
+
+　　　{
+        kanji: "倒す",
+        yomigana: "たおす",
+        meaning: "쓰러뜨리다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "等しく",
+        yomigana: "ひとしく",
+        meaning: "똑같이",
+        group: "1~6"
+    },
+　　　{
+        kanji: "拡充",
+        yomigana: "かくじゅう",
+        meaning: "확충",
+        group: "1~6"
+    },
+　　　{
+        kanji: "険しい",
+        yomigana: "けわしい",
+        meaning: "험하다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "当初",
+        yomigana: "とうしょ",
+        meaning: "당초, 최초",
+        group: "1~6"
+    },
+　　　{
+        kanji: "著しい",
+        yomigana: "いちじるしい",
+        meaning: "현저하다, 두드러지다, 명백하다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "通る",
+        yomigana: "とおる",
+        meaning: "통하다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "抽選",
+        yomigana: "ちゅうせん",
+        meaning: "추첨",
+        group: "1~6"
+    },
+　　　{
+        kanji: "傾く",
+        yomigana: "かたむく",
+        meaning: "기울다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "がけ",
+        yomigana: "",
+        meaning: "벼랑",
+        group: "1~6"
+    },
+　　　{
+        kanji: "飛び散る",
+        yomigana: "とびちる",
+        meaning: "사방에 흩날리다, 튀다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "済み",
+        yomigana: "すみ",
+        meaning: "끝남, 완료",
+        group: "1~6"
+    },
+　　　{
+        kanji: "ガーゼ",
+        yomigana: "",
+        meaning: "거즈",
+        group: "1~6"
+    },
+　　　{
+        kanji: "傷口",
+        yomigana: "きずぐち",
+        meaning: "상처입은 자리",
+        group: "1~6"
+    },
+　　　{
+        kanji: "恒例",
+        yomigana: "こうれい",
+        meaning: "관례",
+        group: "1~6"
+    },
+　　　{
+        kanji: "行事",
+        yomigana: "ぎょうじ",
+        meaning: "행사",
+        group: "1~6"
+    },
+　　　{
+        kanji: "抜き出す",
+        yomigana: "ぬきだす",
+        meaning: "꺼내다, 빼내다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "返却",
+        yomigana: "へんきゃく",
+        meaning: "되돌려줌, 반환, 반납",
+        group: "1~6"
+    },
+　　　{
+        kanji: "際",
+        yomigana: "さい",
+        meaning: "때, 기회",
+        group: "1~6"
+    },
+　　　{
+        kanji: "大半",
+        yomigana: "たいはん",
+        meaning: "태반, 과반, 대부분",
+        group: "1~6"
+    },
+　　　{
+        kanji: "占める",
+        yomigana: "しめる",
+        meaning: "차지하다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "姿勢",
+        yomigana: "しせい",
+        meaning: "자세",
+        group: "1~6"
+    },
+　　　{
+        kanji: "資源",
+        yomigana: "しげん",
+        meaning: "자원",
+        group: "1~6"
+    },
+　　　{
+        kanji: "乏しい",
+        yomigana: "とぼしい",
+        meaning: "모자라다, 부족하다, 적다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "含まれる",
+        yomigana: "ふくまれる",
+        meaning: "포함되다, 속에 들어있다",
+        group: "1~6"
+    },
+　　　{
+        kanji: "選挙",
+        yomigana: "せんきょ",
+        meaning: "선거",
+        group: "1~6"
+    },
+　　　{
+        kanji: "離れる",
+        yomigana: "はなれる",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "怖い",
+        yomigana: "こわい",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "治療",
+        yomigana: "ちりょう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "映る",
+        yomigana: "うつる",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "新鮮",
+        yomigana: "しんせん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "進歩",
+        yomigana: "しんぽ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "刺激",
+        yomigana: "しげき",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "企画",
+        yomigana: "きかく",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "会議",
+        yomigana: "かいぎ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "総額",
+        yomigana: "そうがく",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "容姿",
+        yomigana: "ようし",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "判断",
+        yomigana: "はんだん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "声援",
+        yomigana: "せいえん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "応える",
+        yomigana: "こたえる",
+        meaning: "＊答える",
+        group: "1~6"
+    },
+　　　{
+        kanji: "層",
+        yomigana: "そう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "我々",
+        yomigana: "われわれ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "圧倒的",
+        yomigana: "あっとうてき",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "処理",
+        yomigana: "しょり",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "順番",
+        yomigana: "じゅんばん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "垂直",
+        yomigana: "すいちょく",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "破片",
+        yomigana: "はへん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "批評",
+        yomigana: "ひひょう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "孫",
+        yomigana: "まご",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "極端",
+        yomigana: "きょくたん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "消毒",
+        yomigana: "しょうどく",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "清潔",
+        yomigana: "せいけつ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "抽象的",
+        yomigana: "ちゅうしょうてき",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "応援",
+        yomigana: "おうえん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "冷房装置",
+        yomigana: "れいぼうそうち",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "要求",
+        yomigana: "ようきゅう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "戻す",
+        yomigana: "もどす",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "勧誘",
+        yomigana: "かんゆう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "期限",
+        yomigana: "きげん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "密接",
+        yomigana: "みっせつ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "悔しい",
+        yomigana: "くやしい",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "堅苦しい",
+        yomigana: "かたくるしい",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "省略",
+        yomigana: "しょうりゃく",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "漫画",
+        yomigana: "まんが",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "祝う",
+        yomigana: "いわう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "地方自治体",
+        yomigana: "ちほうじちたい",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "研究",
+        yomigana: "けんきゅう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "資金",
+        yomigana: "しきん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "指す",
+        yomigana: "さす",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "豊富",
+        yomigana: "ほうふ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "幼稚",
+        yomigana: "ようち",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "議論",
+        yomigana: "ぎろん",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "無駄",
+        yomigana: "むだ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "帽子",
+        yomigana: "ぼうし",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "深く被る",
+        yomigana: "ふかくかぶる",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "隠す",
+        yomigana: "かくす",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "晴れ",
+        yomigana: "はれ",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "山頂",
+        yomigana: "さんちょう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "景色",
+        yomigana: "けしき",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "至急",
+        yomigana: "しきゅう",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "憎い",
+        yomigana: "にくい",
+        meaning: "",
+        group: "1~6"
+    },
+　　　{
+        kanji: "圧勝",
+        yomigana: "あっしょう",
+        meaning: "",
+        group: "1~6"
+    },
+
+
+
+];
 
 
 function goHome() {
+    clearInterval(studyTimer);
+    studyTimer = null;
+    studyPlaying = false;
 
-    clearInterval(autoTimer);
-    autoTimer = null;
-    isPlaying = false;
-
-    document.getElementById("startButton").textContent = "▶︎";
-
-    document.getElementById("selectScreen").classList.add("hidden");
-    document.getElementById("sentenceGroupScreen").classList.add("hidden");
-    document.getElementById("originalGroupScreen").classList.add("hidden");
-    document.getElementById("sentenceScreen").classList.add("hidden");
-    document.getElementById("originalScreen").classList.add("hidden");
-
+    hideAllScreens();
     document.getElementById("mainScreen").classList.remove("hidden");
-
 }
 
-function showSentence() {
-    const item = currentSentences[currentIndex];
 
-    document.getElementById("sentence").textContent = item.sentence;
-    document.getElementById("reading").textContent = showReading ? item.reading : "";
+let quizIndex = 0;
+let quizWords = [];
 
-}
+function shuffle(array) {
+    const result = [...array];
 
-function prevSentence() {
-    currentIndex--;
-
-    if (currentIndex < 0) {
-        currentIndex = currentSentences.length - 1;
+    for (let i = result.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [result[i], result[j]] = [result[j], result[i]];
     }
 
-    showSentence();
+    return result;
 }
 
-function nextSentence() {
-    if (currentIndex < currentSentences.length - 1) {
-        currentIndex++;
-        showSentence();
+function openQuiz() {
+    hideAllScreens();
+    document.getElementById("quizScreen").classList.remove("hidden");
+
+quizWords = words.filter(
+    word => word.group === selectedGroup
+);
+    quizIndex = 0;
+
+    showQuizWord();
+}
+
+function showQuizWord() {
+    const word = quizWords[quizIndex];
+
+    if (!word) return;
+
+    document.getElementById("quizWord").textContent = word.kanji;
+    document.getElementById("quizCount").textContent =
+        (quizIndex + 1) + " / " + quizWords.length;
+    document.getElementById("quizHint").textContent = "";
+    document.getElementById("quizMeaning").textContent = "";
+    }
+
+function prevQuizWord() {
+    quizIndex--;
+
+    if (quizIndex < 0) {
+        quizIndex = quizWords.length - 1;
+    }
+
+    showQuizWord();
+}
+
+function showQuizAnswerA() {
+    const word = quizWords[quizIndex];
+
+    if (!word) return;
+
+    const hint = document.getElementById("quizHint");
+
+    if (hint.textContent === "") {
+        hint.textContent = word.yomigana;
+    } else {
+        hint.textContent = "";
+    }
+}
+
+function showQuizAnswerB() {
+    const word = quizWords[quizIndex];
+
+    if (!word) return;
+
+    const meaning = document.getElementById("quizMeaning");
+
+    if (meaning.textContent === "") {
+        meaning.textContent = word.meaning;
+    } else {
+        meaning.textContent = "";
+    }
+}
+
+function nextQuizWord() {
+    quizIndex++;
+
+if (quizIndex >= quizWords.length) {
+    quizIndex = 0;
+}
+
+    showQuizWord();
+}
+
+
+let checkedWords = JSON.parse(
+    localStorage.getItem("checkedJapaneseWords") || "[]"
+);
+
+function isWordChecked(kanji) {
+    return checkedWords.includes(kanji);
+}
+
+function saveCheckedWords() {
+    localStorage.setItem(
+        "checkedJapaneseWords",
+        JSON.stringify(checkedWords)
+    );
+}
+
+function getCurrentStudyWord() {
+    if (!studyWords.length) return null;
+
+    return studyWords[studyIndex] || null;
+}
+
+function updateStudyBookmark() {
+    const button = document.getElementById("studyBookmark");
+    const word = getCurrentStudyWord();
+
+    if (!button) return;
+
+    const active = word && isWordChecked(word.kanji);
+
+    button.textContent = active ? "★" : "☆";
+    button.classList.toggle("active", !!active);
+    button.setAttribute(
+        "aria-label",
+        active ? "체크 해제" : "현재 단어 체크"
+    );
+    button.setAttribute(
+        "title",
+        active ? "체크 해제" : "현재 단어 체크"
+    );
+}
+
+function toggleStudyCheck() {
+    const word = getCurrentStudyWord();
+
+    if (!word) return;
+
+    clearInterval(studyTimer);
+    studyTimer = null;
+    studyPlaying = false;
+
+    document.getElementById("studyToggleButton").textContent = "▶︎";
+
+    if (isWordChecked(word.kanji)) {
+        checkedWords = checkedWords.filter(
+            kanji => kanji !== word.kanji
+        );
+    } else {
+        checkedWords.push(word.kanji);
+    }
+
+    saveCheckedWords();
+    updateStudyBookmark();
+}
+
+function openCheckedWords() {
+    clearInterval(studyTimer);
+    studyTimer = null;
+    studyPlaying = false;
+
+    hideAllScreens();
+    document.getElementById("checkedScreen").classList.remove("hidden");
+
+    renderCheckedWords();
+}
+
+function renderCheckedWords() {
+    const list = document.getElementById("checkedList");
+    const count = document.getElementById("checkedCount");
+
+    const checked = words.filter(word =>
+        checkedWords.includes(word.kanji)
+    );
+
+    count.textContent = `총 ${checked.length}개`;
+
+    if (checked.length === 0) {
+        list.innerHTML = "<p>(null)</p>";
+        return;
+    }
+
+    list.innerHTML = "";
+
+    checked.forEach(word => {
+        const item = document.createElement("div");
+        item.className = "checked-item";
+
+        const kanji = document.createElement("div");
+        kanji.className = "checked-kanji";
+        kanji.textContent = word.kanji;
+
+        const reading = document.createElement("div");
+        reading.className = "checked-reading";
+        reading.textContent = word.yomigana;
+
+        const meaning = document.createElement("div");
+        meaning.className = "checked-meaning";
+        meaning.textContent = word.meaning;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-check-button";
+        deleteButton.textContent = "reset";
+        deleteButton.title = "체크 해제";
+        deleteButton.addEventListener("click", () => {
+            removeCheckedWord(word.kanji);
+        });
+
+        item.appendChild(kanji);
+        item.appendChild(reading);
+        item.appendChild(meaning);
+        item.appendChild(deleteButton);
+
+        list.appendChild(item);
+    });
+}
+
+function removeCheckedWord(kanji) {
+    checkedWords = checkedWords.filter(
+        word => word !== kanji
+    );
+
+    saveCheckedWords();
+    renderCheckedWords();
+    updateStudyBookmark();
+    clearInterval(studyTimer);
+studyTimer = null;
+studyPlaying = false;
+}
+
+
+let studyWords = [];
+let studyIndex = 0;
+let studyTimer = null;
+let studyPlaying = false;
+let selectedGroup = null;
+let selectedMode = null;
+
+let studyAnswerState = 0;
+
+const STUDY_INTERVAL = 3000;
+
+function openStudy() {
+    hideAllScreens();
+    document.getElementById("studyScreen").classList.remove("hidden");
+
+    clearInterval(studyTimer);
+    studyTimer = null;
+    studyPlaying = false;
+
+    studyAnswerState = 0;
+
+    document.getElementById("studyToggleButton").textContent = "▶︎";
+    document.getElementById("studyAnswerToggle").textContent = "♪";
+
+    showStudyWord();
+    updateStudyBookmark();
+}
+
+function showStudyWord() {
+    const word = getCurrentStudyWord();
+
+    if (!word) return;
+
+document.getElementById("studyWord").textContent = word.kanji;
+document.getElementById("studyWord").style.fontSize = "98px";
+
+    if (studyAnswerState >= 1) {
+        document.getElementById("studyReading").textContent =
+            word.yomigana;
+    } else {
+        document.getElementById("studyReading").textContent =
+            "";
+    }
+
+    if (studyAnswerState >= 2) {
+        document.getElementById("studyMeaning").textContent =
+            word.meaning;
+    } else {
+        document.getElementById("studyMeaning").textContent =
+            "";
+    }
+
+    document.getElementById("studyCount").textContent =
+        (studyIndex + 1) + " / " + studyWords.length;
+
+    updateStudyBookmark();
+}
+
+function toggleStudyAnswer() {
+    studyAnswerState++;
+
+    if (studyAnswerState > 2) {
+        studyAnswerState = 0;
+    }
+
+    const button =
+        document.getElementById("studyAnswerToggle");
+
+    if (studyAnswerState === 0) {
+        button.textContent = "♪";
+    } else if (studyAnswerState === 1) {
+        button.textContent = "✎";
+    } else {
+        button.textContent = "⟲";
+    }
+
+    showStudyWord();
+}
+
+function prevStudyWord() {
+    if (!studyWords.length) return;
+
+    studyIndex--;
+
+    if (studyIndex < 0) {
+        studyIndex = studyWords.length - 1;
+    }
+
+    showStudyWord();
+}
+
+function nextStudyWord() {
+    if (!studyWords.length) return;
+
+    studyIndex++;
+
+    if (studyIndex >= studyWords.length) {
+
+        if (selectedGroup === "ALL") {
+            studyWords = shuffle(words);
+        } else {
+            studyWords = shuffle(
+                words.filter(
+                    word => word.group === selectedGroup
+                )
+            );
+        }
+
+        studyIndex = 0;
+    }
+
+    showStudyWord();
+}
+
+function toggleStudy() {
+    if (!studyWords.length) return;
+
+    if (studyPlaying) {
+        clearInterval(studyTimer);
+        studyTimer = null;
+        studyPlaying = false;
+
+        document.getElementById("studyToggleButton").textContent = "▶︎";
+    } else {
+        showStudyWord();
+
+        studyPlaying = true;
+
+        clearInterval(studyTimer);
+
+        studyTimer = setInterval(() => {
+            nextStudyWord();
+        }, STUDY_INTERVAL);
+        document.getElementById("studyToggleButton").textContent = "❚❚";
+    }
+}
+
+function resetStudy() {
+
+    clearInterval(studyTimer);
+    studyTimer = null;
+    studyPlaying = false;
+
+    if (selectedGroup === "ALL") {
+
+        studyWords = shuffle(words);
+
     } else {
 
-        clearInterval(autoTimer);
-        isPlaying = false;
-        document.getElementById("startButton").textContent = "▶︎";
+        studyWords = shuffle(
+            words.filter(
+                word => word.group === selectedGroup
+            )
+        );
     }
+
+    studyIndex = 0;
+
+    document
+        .getElementById("studyToggleButton")
+        .textContent = "▶︎";
+
+    showStudyWord();
 }
 
-function resetSentence() {
-    clearInterval(autoTimer);
-    isPlaying = false;
-    currentIndex = 0;
-    showSentence();
-    document.getElementById("startButton").textContent = "▶︎";
+function clearAllCheckedWords() {
+    checkedWords = [];
+
+    saveCheckedWords();
+    renderCheckedWords();
+    updateStudyBookmark();
 }
 
-function toggleAutoPlay() {
-    if (isPlaying) {
-        clearInterval(autoTimer);
-        autoTimer = null;
-        isPlaying = false;
-        document.getElementById("startButton").textContent = "▶︎";
+function openGroupSelect(mode) {
+    selectedMode = mode;
+
+    hideAllScreens();
+    document.getElementById("groupScreen").classList.remove("hidden");
+
+    if (mode === "quiz") {
+        document.getElementById("groupTitle").textContent = "문제 그룹 선택";
+    } else if (mode === "study") {
+        document.getElementById("groupTitle").textContent = "학습 그룹 선택";
     } else {
-        isPlaying = true;
-        document.getElementById("startButton").textContent = "❚❚";
-
-        autoTimer = setInterval(function() {
-            nextSentence();
-        }, AUTO_INTERVAL);
+        document.getElementById("groupTitle").textContent = "≡";
     }
 }
 
-function toggleReading() {
-    showReading = !showReading;
-
-    const item = currentSentences[currentIndex];
-    document.getElementById("reading").textContent = showReading ? item.reading : "";
-    document.getElementById("readingButton").textContent = showReading ? "★" : "☆";
+function openCategoryList(category) {
+    selectedGroup = category;
+    openWordList();
 }
 
-function openSelectScreen() {
+function selectGroup(group) {
+    selectedGroup = group;
 
-    document.getElementById("mainScreen").classList.add("hidden");
-    document.getElementById("selectScreen").classList.remove("hidden");
+    if (selectedMode === "quiz") {
+        openQuiz();
+    } else if (selectedMode === "study") {
+        studyWords = shuffle(
+            selectedGroup === "ALL"
+                ? words
+                : words.filter(word => word.group === selectedGroup)
+        );
 
+        studyIndex = 0;
+        openStudy();
+    }
 }
 
-function openSentenceGroups() {
+let wordListPage = 0;
+const WORDS_PER_PAGE = 18;
+
+function openWordList() {
+
+    hideAllScreens();
 
     document
-        .getElementById("selectScreen")
-        .classList.add("hidden");
-
-    document
-        .getElementById("sentenceGroupScreen")
+        .getElementById("wordListScreen")
         .classList.remove("hidden");
 
+    wordListPage = 0;
+
+    renderWordList();
+}
+
+function renderWordList() {
+
+    const list =
+        document.getElementById("wordList");
+
+    const title =
+        document.getElementById("wordListTitle");
+
+    const groupWords =
+        selectedGroup === "ALL"
+            ? words
+                : selectedGroup.length === 1
+                ? words.filter(
+                    word => word.group.startsWith(selectedGroup)
+                )
+                : words.filter(
+                    word => word.group === selectedGroup
+             );
+
+    const start =
+        wordListPage * WORDS_PER_PAGE;
+
+    const pageWords =
+        groupWords.slice(
+            start,
+            start + WORDS_PER_PAGE
+        );
+
+    const totalPages =
+        Math.ceil(
+            groupWords.length / WORDS_PER_PAGE
+        );
+
+    title.textContent =
+        selectedGroup === "ALL"
+            ? "전체 단어"
+            : selectedGroup + " 전체 단어";
+        list.innerHTML = "";
+
+        pageWords.forEach(word => {
+
+        const item =
+            document.createElement("div");
+
+        item.className =
+            "word-list-item";
+
+        item.innerHTML =
+            `<div class="word-list-kanji">
+                ${word.kanji}
+             </div>
+
+             <div class="word-list-reading">
+                ${word.yomigana}
+             </div>
+
+             <div class="word-list-meaning">
+                ${word.meaning}
+             </div>`;
+
+        list.appendChild(item);
+    });
+
+    document
+        .getElementById("wordListPage")
+        .textContent =
+        (wordListPage + 1)
+        + " / "
+        + totalPages;
 }
 
 
-function openOriginalGroups() {
+function prevWordList() {
+
+    if (wordListPage > 0) {
+
+        wordListPage--;
+
+    } else {
+
+        const groupWords =
+            selectedGroup === "ALL"
+                ? words
+                : words.filter(
+                    word => word.group === selectedGroup
+                );
+
+        const totalPages =
+            Math.ceil(
+                groupWords.length / WORDS_PER_PAGE
+            );
+
+        wordListPage = totalPages - 1;
+    }
+
+    renderWordList();
+}
+
+
+function nextWordList() {
+
+    const groupWords =
+        selectedGroup === "ALL"
+            ? words
+            : words.filter(
+                word => word.group === selectedGroup
+            );
+
+    const totalPages =
+        Math.ceil(
+            groupWords.length / WORDS_PER_PAGE
+        );
+
+    if (wordListPage < totalPages - 1) {
+
+        wordListPage++;
+
+    } else {
+
+        wordListPage = 0;
+    }
+
+    renderWordList();
+}
+
+function returnToStudy() {
+
+    hideAllScreens();
 
     document
-        .getElementById("selectScreen")
-        .classList.add("hidden");
-
-    document
-        .getElementById("originalGroupScreen")
+        .getElementById("studyScreen")
         .classList.remove("hidden");
 
+    showStudyWord();
+
+    updateStudyBookmark();
 }
 
-function goBack() {
-
-    if (!document.getElementById("sentenceScreen").classList.contains("hidden")) {
-
-        document.getElementById("sentenceScreen").classList.add("hidden");
-        document.getElementById("sentenceGroupScreen").classList.remove("hidden");
-
-        clearInterval(autoTimer);
-        autoTimer = null;
-        isPlaying = false;
-
-        document.getElementById("startButton").textContent = "▶︎";
-
-        return;
-    }
-
-
-    if (!document.getElementById("originalScreen").classList.contains("hidden")) {
-
-        document.getElementById("originalScreen").classList.add("hidden");
-        document.getElementById("originalGroupScreen").classList.remove("hidden");
-
-        return;
-    }
-
-
-    if (!document.getElementById("sentenceGroupScreen").classList.contains("hidden")) {
-
-        document.getElementById("sentenceGroupScreen").classList.add("hidden");
-        document.getElementById("selectScreen").classList.remove("hidden");
-
-        return;
-    }
-
-
-    if (!document.getElementById("originalGroupScreen").classList.contains("hidden")) {
-
-        document.getElementById("originalGroupScreen").classList.add("hidden");
-        document.getElementById("selectScreen").classList.remove("hidden");
-
-        return;
-    }
-
-
-    if (!document.getElementById("selectScreen").classList.contains("hidden")) {
-
-        document.getElementById("selectScreen").classList.add("hidden");
-        document.getElementById("mainScreen").classList.remove("hidden");
-
-        return;
-    }
-
+function toggleFocusMode() {
+    document.body.classList.toggle("focus-mode");
 }
 
-
-function openOriginal(section) {
-
-    let currentOriginals;
-
-    if (section === 1) {
-        currentOriginals = originals小一;
-    } else if (section === 2) {
-        currentOriginals = originals小二;
-    } else if (section === 3) {
-        currentOriginals = originals小三;
-    } else if (section === 4) {
-        currentOriginals = originals小四;
-    } else if (section === 5) {
-        currentOriginals = originals小五;
-    } else if (section === 6) {
-        currentOriginals = originals小六;
-    } else if (section === 7) {
-        currentOriginals = originals中一;
-    } else if (section === 8) {
-        currentOriginals = originals中二;
-    } else if (section === 9) {
-        currentOriginals = originals中三;
-    } else if (section === 10) {
-        currentOriginals = originals中四;
-    } else if (section === 11) {
-        currentOriginals = originals中五;
-    }
-
-    document
-        .getElementById("originalGroupScreen")
-        .classList.add("hidden");
-
-    document
-        .getElementById("originalScreen")
-        .classList.remove("hidden");
-
-    document
-        .getElementById("originalText")
-        .textContent = currentOriginals[0].text;
-
-    document
-        .getElementById("originalScreen")
-        .scrollTop = 0;
+document.getElementById("studyScreen").addEventListener("click", function(e) {
+    if (e.target.closest("button")) return;
+    toggleFocusMode();
 }
 
+);
 
 </script>
+
 </body>
 </html>
